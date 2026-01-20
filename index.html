@@ -19,17 +19,18 @@
             background-color: var(--laundry-bg); 
             color: var(--laundry-navy);
             line-height: 1.6;
+            word-break: keep-all;
         }
 
         .laundry-gradient {
             background: linear-gradient(135deg, #00D1A0 0%, #00B38A 100%);
         }
 
-        /* 스크롤 애니메이션 효과 */
+        /* 스크롤 애니메이션 */
         .reveal {
             opacity: 0;
-            transform: translateY(40px);
-            transition: all 0.9s cubic-bezier(0.17, 0.55, 0.55, 1);
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.2, 0, 0.2, 1);
         }
 
         .reveal.active {
@@ -39,224 +40,171 @@
 
         .card {
             background: white;
-            border-radius: 28px;
-            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.04);
+            border-radius: 24px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
             overflow: hidden;
-            border: 1px solid rgba(0, 0, 0, 0.02);
+            border: 1px solid rgba(0, 0, 0, 0.05);
         }
 
         .badge-v2 {
             background-color: var(--laundry-cyan);
             color: white;
             font-size: 0.75rem;
-            padding: 6px 14px;
+            padding: 4px 12px;
             border-radius: 100px;
             font-weight: 700;
             display: inline-block;
-            letter-spacing: 0.5px;
+            margin-bottom: 1rem;
+        }
+
+        /* 모바일 최적화 반응형 표 */
+        @media (max-width: 768px) {
+            .responsive-table thead { display: none; }
+            .responsive-table tr { display: block; margin-bottom: 1.5rem; border: 1px solid #eee; border-radius: 16px; padding: 1rem; background: #fff; }
+            .responsive-table td { display: block; text-align: right; padding: 0.5rem 0; border: none; font-size: 0.9rem; }
+            .responsive-table td::before { content: attr(data-label); float: left; font-weight: bold; color: #64748B; }
         }
 
         .img-container {
-            background-color: #F8FAFC;
-            padding: 1.5rem;
+            background-color: #FDFDFD;
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: 400px;
+            overflow: hidden;
         }
 
         .img-container img {
-            max-height: 480px;
-            border-radius: 20px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+            width: 100%;
+            height: auto;
+            max-height: 500px;
+            object-fit: contain;
         }
-
-        table th { background-color: #F8FAFC; color: #64748B; padding: 1.25rem; font-weight: 700; }
-        table td { padding: 1.25rem; border-bottom: 1px solid #F1F5F9; }
     </style>
 </head>
-<body class="pb-24">
+<body class="pb-20">
 
-    <nav class="bg-white py-5 px-6 sticky top-0 z-50 shadow-sm">
+    <nav class="bg-white/80 backdrop-blur-md py-4 px-6 sticky top-0 z-50 border-b border-slate-100">
         <div class="max-w-6xl mx-auto flex justify-between items-center">
             <h1 class="text-xl font-bold tracking-tight text-slate-800">LAUNDRY<span class="text-[#00D1A0]">24</span></h1>
-            <div class="hidden md:block">
-                <span class="text-sm font-bold text-slate-400 uppercase tracking-widest">Platform v2.0 Renewal</span>
-            </div>
+            <span class="text-xs font-bold text-slate-400 uppercase tracking-widest border border-slate-200 px-2 py-1 rounded">v2.0 Performance</span>
         </div>
     </nav>
 
-    <header class="laundry-gradient text-white py-28 px-6 text-center shadow-lg">
+    <header class="laundry-gradient text-white py-20 md:py-32 px-6 text-center shadow-lg">
         <div class="max-w-4xl mx-auto reveal">
             <h2 class="text-4xl md:text-6xl font-extrabold mb-6 leading-tight">더 똑똑해진 런드리24 v2.0</h2>
-            <p class="text-lg md:text-2xl text-white/90 font-medium opacity-90">사용자 경험과 운영 효율의 완벽한 진화</p>
+            <p class="text-lg md:text-xl text-white/90 font-medium opacity-90">플랫폼 전면 개편 및 운영 효율 혁신 성과 리포트</p>
         </div>
     </header>
 
-    <main class="max-w-6xl mx-auto mt-16 px-6">
+    <main class="max-w-6xl mx-auto mt-12 px-6">
         
-        <section class="card mb-24 p-10 md:p-14 reveal">
-            <h3 class="text-2xl md:text-3xl font-bold mb-12 text-center text-slate-800">v2.0 무엇이 달라졌나요?</h3>
-            <div class="overflow-x-auto">
-                <table class="w-full border-collapse text-sm md:text-base">
-                    <thead>
-                        <tr class="text-slate-500 border-b-2 border-slate-100">
-                            <th class="text-left">구분</th>
-                            <th class="text-left">주요 개선 항목</th>
-                            <th class="text-center">v1.0</th>
-                            <th class="text-center text-[#00D1A0]">v2.0</th>
+        <section class="mb-24 reveal">
+            <h3 class="text-2xl font-bold mb-8 text-slate-800">주요 업데이트 성과 요약</h3>
+            <div class="card p-4 md:p-8">
+                <table class="w-full responsive-table">
+                    <thead class="bg-slate-50 text-slate-500 text-sm">
+                        <tr>
+                            <th class="py-4 px-4 text-left rounded-l-lg">구분</th>
+                            <th class="py-4 px-4">기존 v1.0</th>
+                            <th class="py-4 px-4 text-[#00D1A0] rounded-r-lg">개선 v2.0</th>
                         </tr>
                     </thead>
-                    <tbody class="font-medium">
+                    <tbody class="divide-y divide-slate-100 font-medium text-sm md:text-base">
                         <tr>
-                            <td rowspan="4" class="font-bold text-slate-400 bg-slate-50 border-r">사용성 혁신</td>
-                            <td class="text-slate-700">실시간 기기 연동</td>
-                            <td class="text-center text-slate-400">결제만 가능</td>
-                            <td class="text-center text-[#00D1A0] font-bold">결제/코스선택/진행상황 노티 등</td>
+                            <td data-label="구분" class="py-4 px-4 font-bold text-slate-700">실시간 기기연동</td>
+                            <td data-label="기존" class="py-4 px-4 text-slate-400">결제만 가능</td>
+                            <td data-label="개선" class="py-4 px-4 text-[#00D1A0] font-bold">결제, 코스선택, 진행상황 노티 등</td>
                         </tr>
                         <tr>
-                            <td class="text-slate-700">남은시간 알림 정확도 </td>
-                            <td class="text-center text-slate-400">평균 오차 10분 이상</td>
-                            <td class="text-center text-[#00D1A0] font-bold">실시간 (1분 미만)</td>
+                            <td data-label="구분" class="py-4 px-4 font-bold text-slate-700">알림 정확도</td>
+                            <td data-label="기존" class="py-4 px-4 text-slate-400">평균 10분 이상 시간 오차</td>
+                            <td data-label="개선" class="py-4 px-4 text-[#00D1A0] font-bold">오차 1분 미만 실시간 안내</td>
                         </tr>
                         <tr>
-                            <td class="text-slate-700">의류 입고중 기기사용</td>
-                            <td class="text-center text-slate-400">불가</td>
-                            <td class="text-center text-[#00D1A0] font-bold">가능</td>
+                            <td data-label="구분" class="py-4 px-4 font-bold text-slate-700">셀프기기 운영</td>
+                            <td data-label="기존" class="py-4 px-4 text-slate-400">입고 중 이용 불가</td>
+                            <td data-label="개선" class="py-4 px-4 text-[#00D1A0] font-bold">입고 중 상시 이용 가능</td>
                         </tr>
                         <tr>
-                            <td class="text-slate-700">유저 액션 가이드</td>
-                            <td class="text-center text-slate-400">안내 부족/이탈 발생</td>
-                            <td class="text-center text-[#00D1A0] font-bold">정확한 유저액션 유도 가이드</td>
+                            <td data-label="구분" class="py-4 px-4 font-bold text-slate-700">고객 가이드</td>
+                            <td data-label="기존" class="py-4 px-4 text-slate-400">부족한 안내로 인한 이탈</td>
+                            <td data-label="개선" class="py-4 px-4 text-[#00D1A0] font-bold">단계별 유저액션 유도 가이드</td>
                         </tr>
                         <tr>
-                            <td rowspan="2" class="font-bold text-slate-400 bg-slate-50 border-r">운영 최적화</td>
-                            <td class="text-slate-700">영수증 발급</td>
-                            <td class="text-center text-slate-400">종이 출력 (장애 요인)</td>
-                            <td class="text-center text-[#00D1A0] font-bold">디지털 모바일 영수증</td>
-                        </tr>
-                        <tr>
-                            <td class="text-slate-700">장애 대응 (심야)</td>
-                            <td class="text-center text-slate-400">대응불가/고객불편/매출감소</td>
-                            <td class="text-center text-[#00D1A0] font-bold">고객 주도 '자체 해결' 가능</td>
+                            <td data-label="구분" class="py-4 px-4 font-bold text-slate-700">장애 대응 (심야)</td>
+                            <td data-label="기존" class="py-4 px-4 text-slate-400">대응 불가</td>
+                            <td data-label="개선" class="py-4 px-4 text-[#00D1A0] font-bold">고객주도 장애해결</td>
                         </tr>
                     </tbody>
                 </table>
             </div>
         </section>
 
-        <div class="space-y-36 mb-24">
+        <div class="space-y-24">
             
-            <section class="grid grid-cols-1 md:grid-cols-2 gap-16 items-center reveal">
+            <section class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center reveal">
                 <div>
-                    <span class="badge-v2">REAL-TIME SYNC</span>
-                    <h3 class="text-3xl font-bold mt-5 mb-6">1. 실시간 기기 연동</h3>
-                    <p class="text-slate-600 mb-6 text-lg leading-relaxed">LG API 연동을 통해 키오스크에서 결제한 코스 정보가 기기에 즉시 전송됩니다. 이제 고객은 세탁기 앞에서 <strong>"시작" 버튼만 누르면 즉시 작동</strong>됩니다.</p>
+                    <span class="badge-v2">Seamless Connection</span>
+                    <h3 class="text-3xl font-bold mb-6">1. 실시간 기기 연동</h3>
+                    <p class="text-slate-600 text-lg leading-relaxed">LG API 연동으로 키오스크 결제 정보가 즉시 전송됩니다. 이제 고객은 기기에서 코스를 다시 고를 필요 없이 <strong>"시작" 버튼만 누르면 세탁이 시작됩니다.</strong></p>
                 </div>
-                <div class="card img-container"><img src="image1.png" alt="기기 연동 가이드"></div>
+                <div class="card img-container"><img src="image1.png" alt="실시간 기기 연동 가이드"></div>
             </section>
 
-            <section class="grid grid-cols-1 md:grid-cols-2 gap-16 items-center reveal">
-                <div class="order-2 md:order-1 card img-container"><img src="image2.png" alt="남은 시간 정확도"></div>
+            <section class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center reveal">
+                <div class="order-2 md:order-1 card img-container"><img src="image2.png" alt="알림 정확도 개선"></div>
                 <div class="order-1 md:order-2">
-                    <span class="badge-v2">PRECISION ALERTS</span>
-                    <h3 class="text-3xl font-bold mt-5 mb-6">2. 남은 시간 알림 개선</h3>
-                    <p class="text-slate-600 mb-6 text-lg leading-relaxed font-medium">셀프 빨래방에서 가장 중요한 기능인 "남은 시간 알림"이 획기적으로 개선되었습니다.</p>
-                    <ul class="space-y-4 text-slate-500">
-                        <li class="flex items-start">
-                            <span class="text-[#00D1A0] mr-2">✔</span>
-                            <span>기존 10분 이상 발생하던 오차를 <strong>실시간 (1분 미만)</strong>으로 줄였습니다.</span>
-                        </li>
-                        <li class="flex items-start">
-                            <span class="text-[#00D1A0] mr-2">✔</span>
-                            <span>실시간 기기 상태 동기화로 고객의 대기 시간을 명확하게 관리합니다.</span>
-                        </li>
-                    </ul>
+                    <span class="badge-v2">Precision Timing</span>
+                    <h3 class="text-3xl font-bold mb-6">2. 획기적인 알림 정확도</h3>
+                    <p class="text-slate-600 text-lg leading-relaxed mb-4">가장 중요한 "남은 시간 알림" 기능이 고도화되었습니다. 기존 10분 이상 발생하던 오차를 <strong>1분 미만으로 줄여</strong> 고객에게 정확한 세탁 종료 안내를 제공합니다.</p>
                 </div>
             </section>
 
-           
-
-            <section class="grid grid-cols-1 md:grid-cols-2 gap-16 items-center reveal">
-                <div class="order-1 md:order-1">
-                    <span class="badge-v2">MULTITASKING</span>
-                    <h3 class="text-3xl font-bold mt-5 mb-6">3. 기사님 의류 입고중 기기사용</h3>
-                    <p class="text-slate-600 mb-6 text-lg leading-relaxed">운송기사가 고객 의류 입고 중에도 셀프기기를 사용할 수 있습니다.</p>
-                    <ul class="space-y-4 text-slate-500">
-                        <li class="flex items-start">
-                            <span class="text-[#00D1A0] mr-2">✔</span>
-                            <span>고객은 의류 입고 중에도 기다림 없이 셀프 기기이용이 가능합니다.</span>
-                        </li>
-                        <li class="flex items-start">
-                            <span class="text-[#00D1A0] mr-2">✔</span>
-                            <span>운송기사는 전용앱을 사용하여 입고시간이 대폭 단축됩니다.</span>
-                        </li>
-                    </ul>
-                </div>
-                <div class="order-2 md:order-2 card img-container"><img src="image6.png" alt="멀티태스킹"></div>
-                
-            </section>
-
-            <section class="grid grid-cols-1 md:grid-cols-2 gap-16 items-center reveal">
-                <div class="card img-container"><img src="image3.png" alt="유저 액션 유도"></div>
+            <section class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center reveal">
                 <div>
-                    <span class="badge-v2">UX IMPROVEMENT</span>
-                    <h3 class="text-3xl font-bold mt-5 mb-6">4. 정확한 유저액션 유도</h3>
-                    <p class="text-slate-600 mb-6 text-lg leading-relaxed">정확한 유저액션을 유도하여 처음 이용하는 고객의 이탈을 막고 사용성을 개선했습니다.</p>
-                    <ul class="space-y-4 text-slate-500">
-                        <li class="flex items-start">
-                            <span class="text-[#00D1A0] mr-2">✔</span>
-                            <span>드라이클리닝 맡기기/찾기 과정의 <strong>단계별 직관적 UI 가이드</strong> 적용</span>
-                        </li>
-                        <li class="flex items-start">
-                            <span class="text-[#00D1A0] mr-2">✔</span>
-                            <span>접수증 누락 등 반복되던 사용자 오류를 최소화했습니다.</span>
-                        </li>
-                        <li class="flex items-start">
-                            <span class="text-[#00D1A0] mr-2">✔</span>
-                            <span><strong>화면 흐름에 맞춘 음성 안내</strong>를 제공해 다음 행동을 즉시 인지하도록 지원합니다.</span>
-                        </li>
+                    <span class="badge-v2">Non-stop Service</span>
+                    <h3 class="text-3xl font-bold mb-6">3. 중단 없는 매장 이용</h3>
+                    <p class="text-slate-600 text-lg leading-relaxed font-medium">물류 입고 작업과 고객 서비스를 분리하여 매장 운영 효율을 극대화했습니다.</p>
+                    <ul class="space-y-3 mt-4 text-slate-500">
+                        <li>• 입고 진행 중에도 대기 없이 셀프 기기 이용 가능</li>
+                        <li>• 물류기사 업무 시간 단축 및 고객 편의성 동시 확보</li>
                     </ul>
                 </div>
-                
+                <div class="card img-container"><img src="image6.png" alt="입고 중 기기이용 안내"></div>
             </section>
 
-            <section class="grid grid-cols-1 md:grid-cols-2 gap-16 items-center reveal">
-                <div class="order-2 md:order-1 card img-container"><img src="image4.png" alt="모바일 영수증"></div>
+            <section class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center reveal">
+                <div class="order-2 md:order-1 card img-container"><img src="image3.png" alt="유저액션 가이드"></div>
                 <div class="order-1 md:order-2">
-                    <span class="badge-v2">DIGITAL RECEIPT</span>
-                    <h3 class="text-3xl font-bold mt-5 mb-6">5. 디지털 모바일 영수증</h3>
-                    <p class="text-slate-600 mb-6 text-lg leading-relaxed">종이 없는 스마트한 매장을 지향합니다. 결제 즉시 스마트폰으로 영수증이 발급되어 편리함과 효율성을 모두 잡았습니다.</p>
-                    <p class="text-slate-500 font-medium">영수증 용지 부족으로 인한 서비스 중단 에러를 근본적으로 차단했습니다.</p>
+                    <span class="badge-v2">Smart UX</span>
+                    <h3 class="text-3xl font-bold mb-6">4. 직관적인 유저액션 유도</h3>
+                    <p class="text-slate-600 text-lg leading-relaxed">복잡한 드라이클리닝 접수 과정도 누구나 쉽게 마칠 수 있습니다. 단계별 맞춤 UI를 통해 <strong>이탈률을 낮추고 접수 누락 오류를 원천 차단</strong>합니다.</p>
                 </div>
             </section>
 
-            <section class="grid grid-cols-1 md:grid-cols-2 gap-16 items-center reveal">
+            <section class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center reveal">
                 <div>
-                    <span class="badge-v2">SELF-SERVICE RECOVERY</span>
-                    <h3 class="text-3xl font-bold mt-5 mb-6">6. 고객 주도 장애 대응</h3>
-                    <p class="text-slate-600 mb-6 text-lg leading-relaxed font-medium">심야 시간대 장애에도 멈추지 않는 서비스를 경험하세요.</p>
-                    <p class="text-slate-500">기기 오류 발생 시 고객이 직접 키오스크에서 <strong>'드라이스테이션 자체 초기화'</strong>를 진행하여 즉시 문제를 해결할 수 있습니다.</p>
+                    <span class="badge-v2">Self Recovery</span>
+                    <h3 class="text-3xl font-bold mb-6">5. 고객 주도 장애 대응</h3>
+                    <p class="text-slate-600 text-lg leading-relaxed">심야 등 관리 부재 시에도 서비스가 중단되지 않습니다. 기기 오류 발생 시 고객이 직접 <strong>키오스크에서 '자체 초기화'</strong>를 진행하여 즉시 문제를 해결할 수 있습니다.</p>
                 </div>
-                <div class="card img-container"><img src="image5.png" alt="자체 초기화 기능"></div>
+                <div class="card img-container"><img src="image5.png" alt="장애 대응 프로세스"></div>
             </section>
 
         </div>
     </main>
 
-    <footer class="mt-40 py-20 border-t border-slate-200 text-center">
-        <p class="text-slate-400 text-sm font-bold uppercase tracking-widest italic tracking-tighter">Laundry24 v2.0 Platform Innovation</p>
+    <footer class="mt-40 py-20 border-t border-slate-100 text-center">
+        <p class="text-slate-400 text-sm font-bold uppercase tracking-widest italic">Laundry24 v2.0 Platform Excellence</p>
     </footer>
 
     <script>
-        // Intersection Observer 기반 스크롤 애니메이션
-        const observerOptions = { threshold: 0.15 };
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) entry.target.classList.add('active');
             });
-        }, observerOptions);
-
+        }, { threshold: 0.1 });
         document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
     </script>
 
