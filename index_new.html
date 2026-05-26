@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>런드리24 v2.0 — 더 똑똑해진 무인 세탁 플랫폼</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+            --cyan: #00D1A0;
+            --cyan-dark: #00A880;
+            --cyan-light: #CFFAF0;
+            --navy: #0F1729;
+            --navy2: #1D2B45;
+            --slate: #64748B;
+            --bg: #F5F7FA;
+            --white: #FFFFFF;
+            --border: rgba(0,0,0,0.07);
+            --shadow-sm: 0 2px 12px rgba(0,0,0,0.06);
+            --shadow-md: 0 8px 32px rgba(0,0,0,0.10);
+            --shadow-lg: 0 24px 64px rgba(0,0,0,0.13);
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--navy);
+            line-height: 1.7;
+            word-break: keep-all;
+            overflow-x: hidden;
+        }
+
+        /* ── NAV ── */
+        nav {
+            position: sticky; top: 0; z-index: 100;
+            background: rgba(255,255,255,0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+            padding: 0 24px;
+        }
+        .nav-inner {
+            max-width: 1100px; margin: 0 auto;
+            display: flex; justify-content: space-between; align-items: center;
+            height: 60px;
+        }
+        .nav-logo {
+            font-size: 1.2rem; font-weight: 800; letter-spacing: -0.5px;
+            color: var(--navy);
+        }
+        .nav-logo span { color: var(--cyan); }
+        .nav-badge {
+            font-size: 0.7rem; font-weight: 700;
+            background: var(--navy); color: var(--white);
+            padding: 4px 10px; border-radius: 100px;
+            letter-spacing: 0.5px;
+        }
+
+        /* ── HERO ── */
+        .hero {
+            background: linear-gradient(150deg, var(--navy) 0%, var(--navy2) 55%, #0a2a40 100%);
+            padding: 80px 24px 100px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero::before {
+            content: '';
+            position: absolute; inset: 0;
+            background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(0,209,160,0.18) 0%, transparent 70%);
+            pointer-events: none;
+        }
+        .hero-eyebrow {
+            display: inline-flex; align-items: center; gap: 8px;
+            background: rgba(0,209,160,0.15); border: 1px solid rgba(0,209,160,0.35);
+            color: var(--cyan); font-size: 0.8rem; font-weight: 700;
+            padding: 6px 16px; border-radius: 100px;
+            margin-bottom: 24px; letter-spacing: 0.5px;
+        }
+        .hero-eyebrow::before { content: '●'; font-size: 0.5rem; animation: pulse 2s infinite; }
+        @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+        .hero h1 {
+            font-size: clamp(2.2rem, 6vw, 4.2rem);
+            font-weight: 900; letter-spacing: -1.5px;
+            color: var(--white); line-height: 1.2;
+            margin-bottom: 20px;
+        }
+        .hero h1 em { color: var(--cyan); font-style: normal; }
+        .hero-sub {
+            font-size: clamp(1rem, 2.5vw, 1.2rem);
+            color: rgba(255,255,255,0.65);
+            max-width: 560px; margin: 0 auto 48px;
+        }
+
+        /* hero stats */
+        .hero-stats {
+            display: flex; justify-content: center; flex-wrap: wrap; gap: 12px;
+            max-width: 700px; margin: 0 auto;
+        }
+        .hero-stat {
+            background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 16px; padding: 18px 28px;
+            flex: 1; min-width: 140px; max-width: 200px;
+        }
+        .hero-stat-num {
+            font-size: 2rem; font-weight: 900;
+            color: var(--cyan); line-height: 1;
+            margin-bottom: 4px;
+        }
+        .hero-stat-label {
+            font-size: 0.78rem; color: rgba(255,255,255,0.55);
+            font-weight: 500;
+        }
+
+        /* ── SECTION WRAPPER ── */
+        main { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+
+        .section { padding: 80px 0; }
+        .section + .section { border-top: 1px solid var(--border); }
+
+        .section-label {
+            display: inline-block;
+            background: var(--cyan-light); color: var(--cyan-dark);
+            font-size: 0.72rem; font-weight: 800; letter-spacing: 1px;
+            text-transform: uppercase; padding: 5px 12px; border-radius: 100px;
+            margin-bottom: 12px;
+        }
+        .section-title {
+            font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+            font-weight: 800; letter-spacing: -0.8px;
+            line-height: 1.3; margin-bottom: 12px;
+        }
+        .section-desc {
+            color: var(--slate); font-size: 1.05rem;
+            max-width: 560px; line-height: 1.8;
+        }
+        .section-desc strong { color: var(--navy); font-weight: 700; }
+
+        /* ── SUMMARY TABLE ── */
+        .summary-section { padding-top: 64px; }
+        .summary-title {
+            text-align: center;
+            font-size: clamp(1.4rem, 3vw, 2rem);
+            font-weight: 800; letter-spacing: -0.5px;
+            margin-bottom: 8px;
+        }
+        .summary-sub {
+            text-align: center; color: var(--slate); margin-bottom: 40px;
+            font-size: 0.95rem;
+        }
+
+        .compare-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 12px;
+        }
+        .compare-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            background: var(--white);
+            border-radius: 16px;
+            border: 1px solid var(--border);
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .compare-row:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+        .compare-header {
+            background: var(--navy);
+            color: white;
+            font-size: 0.75rem; font-weight: 700; letter-spacing: 0.5px;
+        }
+        .compare-cell {
+            padding: 16px 20px;
+            font-size: 0.9rem;
+            display: flex; align-items: center;
+        }
+        .compare-cell.label { font-weight: 700; color: var(--navy); }
+        .compare-cell.old { color: #94a3b8; }
+        .compare-cell.old::before {
+            content: '✕'; margin-right: 8px; color: #cbd5e1; font-size: 0.75rem;
+        }
+        .compare-cell.new { color: var(--cyan-dark); font-weight: 700; }
+        .compare-cell.new::before {
+            content: '✓'; margin-right: 8px; color: var(--cyan); font-size: 0.85rem;
+        }
+        .col-divider { border-left: 1px solid var(--border); }
+
+        /* ── FEATURE SECTIONS ── */
+        .feature-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 56px;
+            align-items: center;
+        }
+        .feature-grid.reverse { direction: rtl; }
+        .feature-grid.reverse > * { direction: ltr; }
+
+        .feature-image {
+            background: var(--white);
+            border-radius: 24px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow-md);
+            aspect-ratio: 4/3;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .feature-image img {
+            width: 100%; height: 100%;
+            object-fit: contain;
+        }
+
+        .feature-content { }
+        .feature-num {
+            font-size: 4rem; font-weight: 900; color: var(--cyan-light);
+            line-height: 1; margin-bottom: 4px; letter-spacing: -2px;
+        }
+
+        .bullet-list { list-style: none; margin-top: 20px; }
+        .bullet-list li {
+            display: flex; align-items: flex-start; gap: 10px;
+            padding: 10px 0; border-bottom: 1px solid var(--border);
+            font-size: 0.95rem; color: var(--slate);
+        }
+        .bullet-list li:last-child { border-bottom: none; }
+        .bullet-list li::before {
+            content: '→'; color: var(--cyan); font-weight: 700;
+            flex-shrink: 0; margin-top: 2px;
+        }
+
+        /* ── IMPACT CALLOUT ── */
+        .impact-box {
+            background: linear-gradient(135deg, var(--navy) 0%, var(--navy2) 100%);
+            border-radius: 24px;
+            padding: 40px 48px;
+            color: white;
+            position: relative; overflow: hidden;
+            margin: 0;
+        }
+        .impact-box::after {
+            content: '';
+            position: absolute; right: -40px; top: -40px;
+            width: 200px; height: 200px;
+            background: radial-gradient(circle, rgba(0,209,160,0.2) 0%, transparent 70%);
+        }
+        .impact-box-label {
+            font-size: 0.75rem; font-weight: 700;
+            color: var(--cyan); letter-spacing: 1px;
+            text-transform: uppercase; margin-bottom: 10px;
+        }
+        .impact-box-title {
+            font-size: 1.5rem; font-weight: 800;
+            margin-bottom: 8px; line-height: 1.3;
+        }
+        .impact-box-desc {
+            color: rgba(255,255,255,0.65); font-size: 0.95rem;
+        }
+
+        /* ── NIGHT FEATURE ── */
+        .night-card {
+            background: linear-gradient(135deg, #0f1729 0%, #1a2840 100%);
+            border-radius: 28px;
+            padding: 56px 48px;
+            color: white;
+            position: relative; overflow: hidden;
+        }
+        .night-card::before {
+            content: '🌙';
+            position: absolute; right: 40px; top: 40px;
+            font-size: 4rem; opacity: 0.15;
+        }
+        .night-badge {
+            display: inline-block;
+            background: rgba(0,209,160,0.15); color: var(--cyan);
+            border: 1px solid rgba(0,209,160,0.3);
+            font-size: 0.75rem; font-weight: 700;
+            padding: 4px 12px; border-radius: 100px;
+            margin-bottom: 16px; letter-spacing: 0.5px;
+        }
+        .night-title {
+            font-size: clamp(1.5rem, 3vw, 2.2rem);
+            font-weight: 800; letter-spacing: -0.5px; margin-bottom: 12px;
+        }
+        .night-desc { color: rgba(255,255,255,0.65); font-size: 1rem; max-width: 480px; }
+        .night-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 16px; margin-top: 36px;
+        }
+        .night-item {
+            background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 16px; padding: 20px;
+        }
+        .night-item-icon { font-size: 1.5rem; margin-bottom: 8px; }
+        .night-item-title { font-size: 0.85rem; font-weight: 700; color: white; margin-bottom: 4px; }
+        .night-item-desc { font-size: 0.78rem; color: rgba(255,255,255,0.5); }
+
+        /* ── SCROLL REVEAL ── */
+        .reveal {
+            opacity: 0;
+            transform: translateY(28px);
+            transition: opacity 0.7s cubic-bezier(0.2,0,0.2,1), transform 0.7s cubic-bezier(0.2,0,0.2,1);
+        }
+        .reveal.visible { opacity: 1; transform: translateY(0); }
+        .reveal-delay-1 { transition-delay: 0.1s; }
+        .reveal-delay-2 { transition-delay: 0.2s; }
+        .reveal-delay-3 { transition-delay: 0.3s; }
+
+        /* ── FOOTER ── */
+        footer {
+            text-align: center;
+            padding: 60px 24px;
+            border-top: 1px solid var(--border);
+            margin-top: 80px;
+        }
+        .footer-logo { font-size: 1.4rem; font-weight: 900; letter-spacing: -0.5px; margin-bottom: 8px; }
+        .footer-logo span { color: var(--cyan); }
+        .footer-sub { font-size: 0.8rem; color: var(--slate); }
+
+        /* ── RESPONSIVE ── */
+        @media (max-width: 768px) {
+            .hero { padding: 60px 20px 80px; }
+            .hero-stat { padding: 14px 18px; min-width: 120px; }
+            .hero-stat-num { font-size: 1.6rem; }
+
+            .section { padding: 56px 0; }
+
+            .compare-row {
+                grid-template-columns: 1fr;
+            }
+            .compare-cell { border-bottom: 1px solid var(--border); }
+            .compare-cell:last-child { border-bottom: none; }
+            .compare-cell.label { font-size: 0.85rem; background: #f8fafc; }
+            .col-divider { border-left: none; }
+            .compare-header { padding: 10px 16px; font-size: 0.7rem; }
+
+            .feature-grid { grid-template-columns: 1fr; gap: 32px; }
+            .feature-grid.reverse { direction: ltr; }
+            .feature-image { order: -1; aspect-ratio: 16/10; }
+
+            .impact-box { padding: 28px 24px; }
+            .impact-box-title { font-size: 1.2rem; }
+
+            .night-card { padding: 36px 24px; }
+            .night-card::before { right: 20px; top: 20px; font-size: 3rem; }
+        }
+
+        @media (max-width: 480px) {
+            .hero h1 { letter-spacing: -0.5px; }
+            .hero-stats { gap: 8px; }
+            .hero-stat { min-width: 130px; }
+            .section-title { letter-spacing: -0.3px; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+    <div class="nav-inner">
+        <div class="nav-logo">LAUNDRY<span>24</span></div>
+        <span class="nav-badge">v2.0 RELEASE</span>
+    </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+    <div class="hero-eyebrow">플랫폼 전면 개편 완료</div>
+    <h1>더 똑똑해진<br><em>런드리24 v2.0</em></h1>
+    <p class="hero-sub">실시간 기기 연동부터 심야 장애 자가 해결까지 — 점주가 없어도 매장이 돌아갑니다.</p>
+    <div class="hero-stats">
+        <div class="hero-stat reveal reveal-delay-1">
+            <div class="hero-stat-num">1분</div>
+            <div class="hero-stat-label">이하 알림 오차<br>(기존 10분+)</div>
+        </div>
+        <div class="hero-stat reveal reveal-delay-2">
+            <div class="hero-stat-num">0</div>
+            <div class="hero-stat-label">입고 중 이용<br>차단 시간</div>
+        </div>
+        <div class="hero-stat reveal reveal-delay-3">
+            <div class="hero-stat-num">24h</div>
+            <div class="hero-stat-label">심야 포함<br>무인 운영</div>
+        </div>
+    </div>
+</div>
+
+<main>
+
+    <!-- SUMMARY TABLE -->
+    <section class="section summary-section reveal">
+        <p class="summary-title">v1.0 → v2.0, 무엇이 달라졌나</p>
+        <p class="summary-sub">5가지 핵심 개선으로 운영 효율과 고객 경험이 동시에 올라갑니다.</p>
+
+        <div class="compare-grid">
+            <div class="compare-row compare-header">
+                <div class="compare-cell" style="color:#94a3b8;font-size:0.72rem;font-weight:700;letter-spacing:0.5px;">항목</div>
+                <div class="compare-cell col-divider" style="color:#94a3b8;font-size:0.72rem;font-weight:700;letter-spacing:0.5px;">기존 v1.0</div>
+                <div class="compare-cell col-divider" style="color:var(--cyan);font-size:0.72rem;font-weight:700;letter-spacing:0.5px;">개선 v2.0</div>
+            </div>
+            <div class="compare-row">
+                <div class="compare-cell label">실시간 기기연동</div>
+                <div class="compare-cell old col-divider">결제만 가능</div>
+                <div class="compare-cell new col-divider">결제, 코스선택, 진행상황 노티 등</div>
+            </div>
+            <div class="compare-row">
+                <div class="compare-cell label">알림 정확도</div>
+                <div class="compare-cell old col-divider">평균 10분 이상 시간 오차</div>
+                <div class="compare-cell new col-divider">오차 1분 미만 실시간 안내</div>
+            </div>
+            <div class="compare-row">
+                <div class="compare-cell label">셀프기기 운영</div>
+                <div class="compare-cell old col-divider">입고 중 이용 불가</div>
+                <div class="compare-cell new col-divider">입고 중 상시 이용 가능</div>
+            </div>
+            <div class="compare-row">
+                <div class="compare-cell label">고객 가이드</div>
+                <div class="compare-cell old col-divider">부족한 안내로 이탈</div>
+                <div class="compare-cell new col-divider">단계별 유저액션 유도 가이드</div>
+            </div>
+            <div class="compare-row">
+                <div class="compare-cell label">장애 대응 (심야)</div>
+                <div class="compare-cell old col-divider">대응 불가</div>
+                <div class="compare-cell new col-divider">고객 주도 자체 초기화</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FEATURE 1 -->
+    <section class="section reveal">
+        <div class="feature-grid">
+            <div class="feature-content">
+                <div class="section-label">Seamless Connection</div>
+                <div class="feature-num">01</div>
+                <h2 class="section-title">실시간 기기 연동</h2>
+                <p class="section-desc">LG API 연동으로 키오스크 결제 정보가 즉시 전송됩니다. 이제 고객은 기기에서 코스를 다시 고를 필요 없이 <strong>"시작" 버튼만 누르면</strong> 세탁이 시작됩니다.</p>
+                <ul class="bullet-list">
+                    <li>결제 즉시 기기에 코스 자동 전송</li>
+                    <li>고객 조작 단계 최소화로 이탈 방지</li>
+                    <li>진행 상황 실시간 푸시 알림 제공</li>
+                </ul>
+            </div>
+            <div class="feature-image">
+                <img src="image1.png" alt="실시간 기기 연동 가이드">
+            </div>
+        </div>
+    </section>
+
+    <!-- FEATURE 2 -->
+    <section class="section reveal">
+        <div class="feature-grid reverse">
+            <div class="feature-content">
+                <div class="section-label">Precision Timing</div>
+                <div class="feature-num">02</div>
+                <h2 class="section-title">획기적인<br>알림 정확도</h2>
+                <p class="section-desc">가장 중요한 "남은 시간 알림"이 고도화되었습니다. 기존 10분 이상 발생하던 오차를 <strong>1분 미만으로 줄여</strong> 고객에게 정확한 세탁 종료 안내를 제공합니다.</p>
+                <div class="impact-box" style="margin-top:28px;">
+                    <div class="impact-box-label">Before → After</div>
+                    <div class="impact-box-title">10분+ 오차 → 1분 미만</div>
+                    <div class="impact-box-desc">고객 불만의 핵심 원인이었던 알림 지연, v2.0에서 사실상 제거되었습니다.</div>
+                </div>
+            </div>
+            <div class="feature-image">
+                <img src="image2.png" alt="알림 정확도 개선">
+            </div>
+        </div>
+    </section>
+
+    <!-- FEATURE 3 -->
+    <section class="section reveal">
+        <div class="feature-grid">
+            <div class="feature-content">
+                <div class="section-label">Non-stop Service</div>
+                <div class="feature-num">03</div>
+                <h2 class="section-title">중단 없는<br>매장 이용</h2>
+                <p class="section-desc">물류 입고 작업과 고객 서비스를 분리하여 매장 운영 효율을 극대화했습니다.</p>
+                <ul class="bullet-list">
+                    <li>입고 진행 중에도 대기 없이 셀프 기기 이용 가능</li>
+                    <li>물류기사 업무 시간 단축 및 고객 편의성 동시 확보</li>
+                    <li>매출 기회 손실 원천 차단</li>
+                </ul>
+            </div>
+            <div class="feature-image">
+                <img src="image6.png" alt="입고 중 기기이용 안내">
+            </div>
+        </div>
+    </section>
+
+    <!-- FEATURE 4 -->
+    <section class="section reveal">
+        <div class="feature-grid reverse">
+            <div class="feature-content">
+                <div class="section-label">Smart UX</div>
+                <div class="feature-num">04</div>
+                <h2 class="section-title">직관적인<br>유저액션 유도</h2>
+                <p class="section-desc">복잡한 드라이클리닝 접수 과정도 누구나 쉽게 마칠 수 있습니다. 단계별 맞춤 UI를 통해 <strong>이탈률을 낮추고 접수 누락 오류를 원천 차단</strong>합니다.</p>
+                <ul class="bullet-list">
+                    <li>접수 단계마다 명확한 행동 유도 안내</li>
+                    <li>누락·오류 없는 완성도 높은 접수 프로세스</li>
+                    <li>초보 고객도 헤매지 않는 가이드 UX</li>
+                </ul>
+            </div>
+            <div class="feature-image">
+                <img src="image3.png" alt="유저액션 가이드">
+            </div>
+        </div>
+    </section>
+
+    <!-- FEATURE 5 -->
+    <section class="section reveal" style="padding-bottom: 0;">
+        <div class="feature-grid" style="gap:48px;">
+            <div class="feature-content">
+                <div class="section-label">Self Recovery</div>
+                <div class="feature-num">05</div>
+                <h2 class="section-title">고객 주도<br>장애 대응</h2>
+                <p class="section-desc">심야 등 관리 부재 시에도 서비스가 중단되지 않습니다. 기기 오류 발생 시 고객이 직접 키오스크에서 <strong>'자체 초기화'</strong>를 진행하여 즉시 문제를 해결할 수 있습니다.</p>
+                <ul class="bullet-list">
+                    <li>점주 연락 없이 고객이 직접 오류 해결</li>
+                    <li>심야·새벽 시간대 서비스 연속성 보장</li>
+                    <li>긴급 상황에도 매출 공백 최소화</li>
+                </ul>
+            </div>
+            <div class="feature-image">
+                <img src="image5.png" alt="장애 대응 프로세스">
+            </div>
+        </div>
+    </section>
+
+    <!-- NIGHT FULL BANNER -->
+    <section class="section reveal" style="padding-top: 48px;">
+        <div class="night-card">
+            <div class="night-badge">24시간 무인 운영</div>
+            <div class="night-title">점주가 없어도<br>매장은 돌아갑니다</div>
+            <p class="night-desc">런드리24 v2.0은 심야·새벽 시간대까지 안정적으로 작동합니다. 고객 스스로 문제를 해결하고, 알림은 정확하고, 기기는 끊임없이 이어집니다.</p>
+            <div class="night-grid">
+                <div class="night-item">
+                    <div class="night-item-icon">⚡</div>
+                    <div class="night-item-title">실시간 연동</div>
+                    <div class="night-item-desc">결제 즉시 기기 자동 세팅</div>
+                </div>
+                <div class="night-item">
+                    <div class="night-item-icon">🔔</div>
+                    <div class="night-item-title">정확한 알림</div>
+                    <div class="night-item-desc">1분 미만 오차 보장</div>
+                </div>
+                <div class="night-item">
+                    <div class="night-item-icon">🔧</div>
+                    <div class="night-item-title">자가 복구</div>
+                    <div class="night-item-desc">고객 주도 오류 초기화</div>
+                </div>
+                <div class="night-item">
+                    <div class="night-item-icon">🛍️</div>
+                    <div class="night-item-title">무중단 입고</div>
+                    <div class="night-item-desc">입고 중에도 서비스 지속</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</main>
+
+<footer>
+    <div class="footer-logo">LAUNDRY<span>24</span></div>
+    <p class="footer-sub">v2.0 Platform Excellence Report</p>
+</footer>
+
+<script>
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+            if (e.isIntersecting) e.target.classList.add('visible');
+        });
+    }, { threshold: 0.08 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
