@@ -1,441 +1,396 @@
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HD현대중공업 x Laundry24/LaundryGo - 스마트 선박 세탁실 관리 솔루션 제안서</title>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap');
-        
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Noto Sans KR', sans-serif;
-        }
-        
-        body {
-            background-color: #f8faee; /* Modern light beige/tint background */
-            color: #1e293b;
-            line-height: 1.6;
-        }
-        
-        .navbar {
-            background-color: #0f172a;
-            color: #ffffff;
-            padding: 20px 40px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-        }
-        
-        .navbar .brand {
-            font-weight: 700;
-            font-size: 1.2rem;
-            color: #38bdf8;
-        }
-        
-        .navbar .partner {
-            font-weight: 500;
-            font-size: 1rem;
-            color: #94a3b8;
-        }
-        
-        .hero {
-            background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%);
-            color: #ffffff;
-            padding: 100px 40px;
-            text-align: center;
-            position: relative;
-        }
-        
-        .hero h1 {
-            font-size: 2.8rem;
-            font-weight: 700;
-            margin-bottom: 20px;
-            letter-spacing: -0.05em;
-        }
-        
-        .hero p {
-            font-size: 1.3rem;
-            color: #cbd5e1;
-            max-width: 800px;
-            margin: 0 auto 40px auto;
-            font-weight: 300;
-        }
-        
-        .badge {
-            display: inline-block;
-            background-color: #38bdf8;
-            color: #0f172a;
-            padding: 6px 16px;
-            border-radius: 20px;
-            font-weight: 600;
-            font-size: 0.9rem;
-            margin-bottom: 20px;
-        }
-        
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 60px 20px;
-        }
-        
-        .section-title {
-            font-size: 2rem;
-            font-weight: 700;
-            color: #0f172a;
-            margin-bottom: 15px;
-            text-align: center;
-            position: relative;
-        }
-        
-        .section-title::after {
-            content: '';
-            display: block;
-            width: 50px;
-            height: 4px;
-            background-color: #38bdf8;
-            margin: 15px auto 0 auto;
-            border-radius: 2px;
-        }
-        
-        .section-desc {
-            text-align: center;
-            color: #64748b;
-            margin-bottom: 50px;
-            font-size: 1.1rem;
-        }
-        
-        .grid-2 {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
-            gap: 30px;
-            margin-bottom: 60px;
-        }
-        
-        .card {
-            background: #ffffff;
-            border-radius: 16px;
-            padding: 40px;
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);
-            border: 1px solid #e2e8f0;
-            transition: transform 0.3s ease;
-        }
-        
-        .card:hover {
-            transform: translateY(-5px);
-        }
-        
-        .card-num {
-            font-size: 2rem;
-            font-weight: 700;
-            color: #38bdf8;
-            margin-bottom: 10px;
-        }
-        
-        .card h3 {
-            font-size: 1.4rem;
-            font-weight: 700;
-            color: #0f172a;
-            margin-bottom: 15px;
-        }
-        
-        .card p {
-            color: #475569;
-            margin-bottom: 20px;
-            font-size: 1rem;
-        }
-        
-        .features-list {
-            list-style: none;
-        }
-        
-        .features-list li {
-            position: relative;
-            padding-left: 25px;
-            margin-bottom: 10px;
-            color: #334155;
-        }
-        
-        .features-list li::before {
-            content: '✓';
-            position: absolute;
-            left: 0;
-            color: #38bdf8;
-            font-weight: bold;
-        }
-        
-        .architecture {
-            background-color: #ffffff;
-            border-radius: 20px;
-            padding: 50px;
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);
-            margin-bottom: 60px;
-            border: 1px solid #e2e8f0;
-        }
-        
-        .arch-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 20px;
-            text-align: center;
-            margin-top: 30px;
-        }
-        
-        .arch-item {
-            background: #f8fafc;
-            padding: 25px;
-            border-radius: 12px;
-            border-top: 4px solid #1e3a8a;
-        }
-        
-        .arch-item h4 {
-            font-size: 1.1rem;
-            color: #0f172a;
-            margin-bottom: 10px;
-            font-weight: 600;
-        }
-        
-        .arch-item p {
-            font-size: 0.9rem;
-            color: #64748b;
-        }
-        
-        .mockup-container {
-            background: #f1f5f9;
-            border-radius: 12px;
-            padding: 20px;
-            margin-top: 20px;
-            font-family: monospace;
-            text-align: left;
-            border-left: 4px solid #38bdf8;
-        }
-        
-        .table-styled {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-            background: #ffffff;
-        }
-        
-        .table-styled th, .table-styled td {
-            padding: 12px 15px;
-            border: 1px solid #e2e8f0;
-            text-align: center;
-        }
-        
-        .table-styled th {
-            background-color: #f1f5f9;
-            color: #0f172a;
-            font-weight: 600;
-        }
-        
-        .status-badge {
-            padding: 2px 8px;
-            border-radius: 4px;
-            font-size: 0.85rem;
-            font-weight: 500;
-        }
-        
-        .status-busy { background-color: #fee2e2; color: #ef4444; }
-        .status-avail { background-color: #dcfce7; color: #22c55e; }
-        
-        .footer {
-            background-color: #0f172a;
-            color: #94a3b8;
-            padding: 40px 20px;
-            text-align: center;
-            font-size: 0.9rem;
-            border-top: 1px solid #1e293b;
-        }
-        
-        @media (max-width: 768px) {
-            .grid-2, .arch-grid {
-                grid-template-columns: 1fr;
-            }
-            .hero h1 { font-size: 2rem; }
-        }
-    </style>
-</head>
-<body>
+## 웹페이지 제안서 고도화: 4대 핵심기능 모바일 UI 구현
 
-    <nav class="navbar">
-        <div class="brand">Smart Ship Laundry Solution</div>
-        <div class="partner">HD현대중공업 x Laundry24/LaundryGo</div>
-    </nav>
+HD현대중공업 제안서의 구체성을 높이기 위해, 기존 제안서의 '4대 핵심기능' 섹션을 텍스트 기반 설명에서 실제 모바일 앱/웹 UI 모의구현(Mockup)을 포함한 시각적 카드로 전면 업그레이드했습니다.
 
-    <header class="hero">
-        <span class="badge">B2B 스마트 선박 솔루션 제안</span>
-        <h1>IoT·모바일 앱·QR 연동으로<br>승선 생활의 편의를 혁신하다</h1>
-        <p>대한민국 최고 조선 기술의 명가 <strong>HD현대중공업</strong>과 국가대표 스마트 무인 세탁 브랜드 <strong>Laundry24 / LaundryGo</strong>가 함께 만들어가는 차세대 스마트 십 선원 복지 플랫폼 프로젝트입니다.</p>
-    </header>
+이를 통해 선원이 실제 앱을 열었을 때 마주할 화면 구성을 미리 보여줌으로써, 제안의 실현 가능성을 직관적으로 전달하고 스마트십 인프라로서의 완성도를 강조합니다.
 
-    <main class="container">
+### 🛠️ 주요 수정 사항 요약
+
+1. **시각적 Mockup 프레임:** 각 기능 카드 내부에 표준 모바일(phone) 프레임을 CSS로 구현하여 실제 화면 느낌을 전달합니다.
+2. **01 실시간 현황:** 텍스트 테이블 대신, 세탁기/건조기 아이콘, 진행률 바, 실시간 잔여 시간 카운트다운을 시각화한 리스트 UI로 변경했습니다.
+3. **02 Push 알림:** iOS 표준 알림 트레이 형식을 모방하여, 잠금 화면에서 HD HHI 로고와 함께 "세탁기 2호기 완료 5분 전" 알림이 뜨는 모습을 구현했습니다.
+4. **03 찜 기능:** 내가 예약한 기기 전용 탭 화면을 구현하여, '예약 중' 상태와 곧 이용 가능함을 알리는 타이머를 시각화했습니다.
+5. **04 QR 웹 접속:** 모바일 브라우저(Safari/Chrome) 프레임 내부에 실시간 현황 화면이 로딩되는 모습을 구현하고, 실제 부착될 QR 스티커 Mockup을 추가했습니다.
+
+---
+
+[file-tag: smart_laundry_proposal_web_v2.html]
+
+### 📂 적용 방법
+
+1. 위 링크의 HTML 코드를 복사합니다.
+2. 기존 `smart_laundry_proposal_web.html` 파일의 내용을 전체 삭제한 후 붙여넣거나, 새 HTML 파일로 저장합니다.
+3. 웹 브라우저로 파일을 열어 업데이트된 시각적 UI를 확인합니다.
+
+HD현대중공업 제안 시, 이 고도화된 웹페이지를 스크린에 띄워 발표하거나 로컬 파일로 전달하면 훨씬 더 구체적이고 매력적인 솔루션으로 인식될 것입니다.
+
+```
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Noto Sans KR', sans-serif; }
+    body { background-color: #f8faee; color: #1e293b; line-height: 1.6; }
+    
+    /* Navigation */
+    .navbar { background-color: #0f172a; color: #ffffff; padding: 20px 40px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); }
+    .navbar .brand { font-weight: 700; font-size: 1.2rem; color: #38bdf8; }
+    .navbar .partner { font-weight: 500; font-size: 1rem; color: #94a3b8; }
+    
+    /* Hero */
+    .hero { background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%); color: #ffffff; padding: 100px 40px; text-align: center; }
+    .hero h1 { font-size: 2.8rem; font-weight: 700; margin-bottom: 20px; letter-spacing: -0.05em; }
+    .hero p { font-size: 1.3rem; color: #cbd5e1; max-width: 800px; margin: 0 auto 40px auto; font-weight: 300; }
+    .badge { display: inline-block; background-color: #38bdf8; color: #0f172a; padding: 6px 16px; border-radius: 20px; font-weight: 600; font-size: 0.9rem; margin-bottom: 20px; }
+    
+    /* Containers */
+    .container { max-width: 1200px; margin: 0 auto; padding: 60px 20px; }
+    .section-title { font-size: 2rem; font-weight: 700; color: #0f172a; margin-bottom: 15px; text-align: center; position: relative; }
+    .section-title::after { content: ''; display: block; width: 50px; height: 4px; background-color: #38bdf8; margin: 15px auto 0 auto; border-radius: 2px; }
+    .section-desc { text-align: center; color: #64748b; margin-bottom: 50px; font-size: 1.1rem; }
+    
+    /* Features Grid - 업그레이드됨 */
+    .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(500px, 1fr)); gap: 40px; margin-bottom: 60px; }
+    .card { background: #ffffff; border-radius: 16px; padding: 40px; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05); border: 1px solid #e2e8f0; }
+    .card-header { display: flex; align-items: center; margin-bottom: 25px; }
+    .card-num { font-size: 2rem; font-weight: 700; color: #38bdf8; margin-right: 15px; }
+    .card h3 { font-size: 1.4rem; font-weight: 700; color: #0f172a; }
+    .card > p { color: #475569; margin-bottom: 30px; font-size: 1rem; }
+    .features-list { list-style: none; margin-bottom: 30px; }
+    .features-list li { position: relative; padding-left: 25px; margin-bottom: 10px; color: #334155; }
+    .features-list li::before { content: '✓'; position: absolute; left: 0; color: #38bdf8; font-weight: bold; }
+
+    /* =========================================
+       MOBILE MOCKUP CSS (The new visualization)
+       ========================================= */
+    .mockup-frame {
+        width: 280px; height: 500px; background: #fff;
+        border: 12px solid #334155; border-radius: 36px;
+        box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1), 0 10px 10px -5px rgba(0,0,0,0.04);
+        overflow: hidden; margin: 0 auto;
+        position: relative; font-family: sans-serif;
+        border-bottom: 15px solid #334155;
+    }
+    .mockup-frame .phone-top {
+        width: 120px; height: 18px; background: #334155;
+        position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+        border-bottom-left-radius: 10px; border-bottom-right-radius: 10px;
+    }
+    
+    /* Common Mobile UI Styles */
+    .app-bg { background-color: #f1f5f9; height: 100%; padding: 25px 15px 15px 15px; }
+    .app-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+    .app-title { font-weight: bold; font-size: 1.1rem; color: #0f172a; }
+    .app-loc { font-size: 0.8rem; color: #38bdf8; font-weight: bold; }
+    
+    /* 01 Real-time Status UI */
+    .machine-list { list-style: none; }
+    .machine-card {
+        background: #fff; border-radius: 12px; padding: 12px;
+        margin-bottom: 10px; border: 1px solid #e2e8f0;
+        display: flex; align-items: center;
+    }
+    .machine-icon-box {
+        width: 35px; height: 35px; background-color: #dbeafe;
+        border-radius: 8px; color: #2563eb; font-weight: bold;
+        display: flex; align-items: center; justify-content: center;
+        margin-right: 12px; font-size: 1.2rem;
+    }
+    .machine-info { flex: 1; }
+    .machine-id { font-weight: bold; font-size: 0.9rem; color: #1e293b; }
+    .machine-status { font-size: 0.8rem; color: #ef4444; }
+    .machine-status.avail { color: #22c55e; }
+    .machine-time { font-size: 0.9rem; font-weight: bold; color: #0f172a; text-align: right; }
+    .progress-circle {
+        width: 20px; height: 20px; border-radius: 50%;
+        border: 3px solid #e2e8f0; position: relative; margin-right: 10px;
+    }
+    .progress-circle.active { border-color: #38bdf8; border-top-color: #0f172a; }
+
+    /* 02 Push Notification UI (Lockscreen) */
+    .lockscreen-bg { background: linear-gradient(180deg, #1e3a8a 0%, #1e293b 100%); height: 100%; padding: 30px 20px; }
+    .time-box { text-align: center; color: #fff; margin-bottom: 60px; margin-top: 20px;}
+    .time-box .hour { font-size: 3rem; font-weight: lighter; }
+    .time-box .date { font-size: 0.9rem; font-weight: normal; margin-top: -10px; opacity: 0.8; }
+    .notif-tray {
+        background: rgba(255, 255, 255, 0.9); border-radius: 14px;
+        padding: 10px; display: flex; align-items: start;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1); backdrop-filter: blur(5px);
+    }
+    .app-icon-circle {
+        width: 20px; height: 20px; background-color: #0f172a;
+        border-radius: 5px; color: #38bdf8; font-size: 0.7rem;
+        display: flex; align-items: center; justify-content: center;
+        margin-right: 8px; font-weight: bold; margin-top: 3px;
+    }
+    .notif-info { flex: 1; font-size: 0.8rem;}
+    .notif-header { display: flex; justify-content: space-between; margin-bottom: 2px; }
+    .notif-appname { font-weight: bold; color: #0f172a; }
+    .notif-time { color: #64748b; font-size: 0.75rem; }
+    .notif-msg { color: #334155; font-weight: normal; line-height: 1.3;}
+    .app-icon-logo { height: 12px; margin-bottom: -1px;}
+
+    /* 03 Reservation ("찜") UI */
+    .reserv-tab { border-bottom: 2px solid #e2e8f0; display: flex; margin-bottom: 15px; padding-bottom: 0px; }
+    .reserv-tab-item { padding: 8px 15px; font-size: 0.85rem; color: #64748b; font-weight: normal; }
+    .reserv-tab-item.active { border-bottom: 2px solid #0f172a; color: #0f172a; font-weight: bold; }
+    .reserv-card {
+        background: #fff; border-radius: 12px; padding: 12px;
+        margin-bottom: 10px; border: 1px solid #dbeafe;
+        display: flex; align-items: center;
+    }
+    .star-box { color: #38bdf8; font-size: 1.2rem; margin-right: 12px; }
+    
+    /* 04 QR Web Access UI */
+    .browser-mockup { height: 100%; border-radius: 20px; overflow: hidden; background: #fff;}
+    .browser-header { background-color: #e2e8f0; padding: 8px 10px; display: flex; align-items: center; font-size: 0.75rem; color: #64748b;}
+    .url-bar { background: #fff; border-radius: 6px; flex: 1; padding: 4px 10px; margin-left: 10px;}
+    .browser-content { padding: 15px; background: #f1f5f9; height: 100%; simplified: true; }
+    .simplified-list-item { background: #fff; border-radius: 8px; height: 35px; margin-bottom: 8px;}
+
+    /* Stickers mockup */
+    .sticker-card {
+         width: 120px; height: 150px; background: #fff; 
+         border: 2px dashed #38bdf8; border-radius: 10px; padding: 15px;
+         text-align: center; margin-top: 15px;
+    }
+    .qr-placeholder { font-weight: bold; font-size: 0.9rem;}
+
+</style>
+
+```
+
+```
+<nav class="navbar">
+    <div class="brand">Smart Ship Laundry Solution</div>
+    <div class="partner">HD현대중공업 x Laundry24/LaundryGo</div>
+</nav>
+
+<header class="hero">
+    <span class="badge">B2B 스마트 선박 솔루션 제안</span>
+    <h1>IoT·앱·QR로<br>선상 생활의 편의를 혁신하다</h1>
+    <p>HD현대중공업 스마트 선박에 탑재되는 차세대 선원 복지 플랫폼 프로젝트입니다.</p>
+</header>
+
+<main class="container">
+    
+    <!-- 핵심 기능 상세 Section -->
+    <section>
+        <h2 class="section-title">4대 핵심 기능 & 모바일 UI</h2>
+        <p class="section-desc">선원의 동선을 최적화하고 불편을 제로화하는 스마트 서비스 화면 구성</p>
         
-        <!-- 제안 배경 및 필요성 -->
-        <section style="margin-bottom: 80px;">
-            <h2 class="section-title">제안 배경 및 필요성</h2>
-            <p class="section-desc">왜 HD현대중공업 스마트 선박에 런드리 통합 관리 시스템이 필요할까요?</p>
-            <div style="background: #ffffff; padding: 40px; border-radius: 16px; border: 1px solid #e2e8f0; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);">
-                <p style="margin-bottom: 15px; color: #334155;">
-                    장기 운항을 수행하는 대형 선박 환경에서 <strong>선원 복지(Crew Welfare)</strong>는 승선 인력의 업무 효율성과 직결되는 핵심 요소입니다. 그 중 선내 세탁실은 매일 이용하는 필수 공간이지만, 기존 방식은 여러 한계를 지니고 있었습니다.
-                </p>
-                <ul style="margin-left: 20px; margin-bottom: 20px; color: #475569; line-height: 1.8;">
-                    <li><strong>불필요한 이동 유발:</strong> 세탁기나 건조기가 비어있는지 확인하기 위해 선실과 세탁실을 여러 번 오가야 하는 번거로움이 발생합니다.</li>
-                    <li><strong>세탁물 방치 및 갈등 발생:</strong> 작동이 끝난 세탁물이 적시에 회수되지 않아 다음 이용자가 대기해야 하거나, 무단으로 세탁물을 꺼내며 선원 간 피로도가 누적됩니다.</li>
-                    <li><strong>기기 관리의 어려움:</strong> 한정된 선내 인프라에서 고장 유무나 가동률을 데이터로 파악하기 어려웠습니다.</li>
-                </ul>
-                <p style="color: #334155;">
-                    이에 <strong>Laundry24와 LaundryGo</strong>의 고도화된 무인 운영 노하우와 스마트 기술력을 선박 환경에 이식하여, 스마트십 수주 경쟁력을 한 단계 더 끌어올리는 차별화된 복지 솔루션을 제안합니다.
-                </p>
-            </div>
-        </section>
-
-        <!-- 솔루션 개요 -->
-        <section class="architecture">
-            <h2 class="section-title">솔루션 구성도</h2>
-            <p class="section-desc">IoT 하드웨어부터 모바일 환경까지 유기적으로 연동되는 선상 시스템 아키텍처</p>
-            <div class="arch-grid">
-                <div class="arch-item">
-                    <h4>모바일 앱 (iOS/Android)</h4>
-                    <p>• 실시간 현황 조회<br>• 원터치 찜 기능<br>• Push 알림 수신</p>
-                </div>
-                <div class="arch-item">
-                    <h4>QR 웹 (브라우저 기반)</h4>
-                    <p>• 별도 앱 설치 불필요<br>• 스캔 즉시 현황 조회<br>• 모든 기기 호환</p>
-                </div>
-                <div class="arch-item">
-                    <h4>클라우드 서버</h4>
-                    <p>• 선내 실시간 데이터 처리<br>• 지능형 알림 발송 엔진<br>• 스케줄링 관리</p>
-                </div>
-                <div class="arch-item">
-                    <h4>세탁기 / 건조기 (IoT 모듈)</h4>
-                    <p>• 자체 센서 상태 전송<br>• 완료 신호 실시간 연동<br>• 오프라인 안정성 확보</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- 핵심 기능 상세 -->
-        <section>
-            <h2 class="section-title">4대 핵심 기능</h2>
-            <p class="section-desc">선원의 동선을 최적화하고 불편을 제로화하는 스마트 서비스</p>
-            
-            <div class="grid-2">
-                <!-- 기능 1 -->
-                <div class="card">
+        <div class="grid-2">
+            <!-- 기능 1 -->
+            <div class="card">
+                <div class="card-header">
                     <div class="card-num">01</div>
-                    <h3>실시간 현황 조회</h3>
-                    <p>세탁실까지 직접 이동하지 않고도, 언제 어디서나 선실 내에서 앱을 통해 세탁실 내 모든 기기의 상태를 실시간으로 파악할 수 있습니다.</p>
-                    <ul class="features-list">
-                        <li>현재 사용 여부 및 잔여 분 단위 시간 즉시 확인</li>
-                        <li>실시간 갱신 시스템으로 오차 없는 최신 정보 제공</li>
-                        <li>이용 가능한 기기를 한눈에 시각화하여 불필요한 동선 제거</li>
-                    </ul>
-                    <div class="mockup-container">
-                        <strong>📱 세탁실 현황 - 3층</strong>
-                        <table class="table-styled">
-                            <tr><th>기기명</th><th>상태</th><th>잔여시간</th></tr>
-                            <tr><td>세탁기 1호기</td><td><span class="status-badge status-busy">사용 중</span></td><td>23분</td></tr>
-                            <tr><td>세탁기 2호기</td><td><span class="status-badge status-busy">사용 중</span></td><td>8분</td></tr>
-                            <tr><td>세탁기 3호기</td><td><span class="status-badge status-avail">이용 가능</span></td><td>즉시 사용</td></tr>
-                        </table>
+                    <h3>실시간 현황 조회 (모바일 앱)</h3>
+                </div>
+                <p>직접 세탁실을 방문하지 않고, 선실 내에서 앱으로 모든 기기의 상태와 잔여 시간을 분 단위로 파악할 수 있습니다.</p>
+                <ul class="features-list">
+                    <li>사용 여부 및 잔여 가동 시간 즉시 확인</li>
+                    <li>실시간 동기화로 오차 없는 최신 정보 제공</li>
+                    <li>이용 가능 기기 시각화로 불필요 동선 제거</li>
+                </ul>
+                
+                <!-- Visualization: Real-time Status UI -->
+                <div class="mockup-frame">
+                    <div class="phone-top"></div>
+                    <div class="app-bg">
+                        <div class="app-header">
+                            <span class="app-title">세탁실 현황</span>
+                            <span class="app-loc">📍 3층 대형세탁실</span>
+                        </div>
+                        <ul class="machine-list">
+                            <li class="machine-card">
+                                <div class="progress-circle active"></div>
+                                <div class="machine-icon-box">W</div>
+                                <div class="machine-info">
+                                    <div class="machine-id">세탁기 1호기</div>
+                                    <div class="machine-status">사용 중 (표준 코스)</div>
+                                </div>
+                                <div class="machine-time">23분 남음</div>
+                            </li>
+                            <li class="machine-card">
+                                <div class="progress-circle active"></div>
+                                <div class="machine-icon-box">W</div>
+                                <div class="machine-info">
+                                    <div class="machine-id">세탁기 2호기</div>
+                                    <div class="machine-status">완료 직전</div>
+                                </div>
+                                <div class="machine-time" style="color: #ef4444;">8분 남음</div>
+                            </li>
+                            <li class="machine-card">
+                                <div class="progress-circle"></div>
+                                <div class="machine-icon-box" style="background:#dcfce7; color:#16a34a;">W</div>
+                                <div class="machine-info">
+                                    <div class="machine-id">세탁기 3호기</div>
+                                    <div class="machine-status avail">이용 가능</div>
+                                </div>
+                                <div class="machine-time">즉시 사용</div>
+                            </li>
+                            <li class="machine-card">
+                                <div class="progress-circle active"></div>
+                                <div class="machine-icon-box">D</div>
+                                <div class="machine-info">
+                                    <div class="machine-id">건조기 1호기</div>
+                                    <div class="machine-status">사용 중 (강력 건조)</div>
+                                </div>
+                                <div class="machine-time">15분 남음</div>
+                            </li>
+                        </ul>
                     </div>
                 </div>
+            </div>
 
-                <!-- 기능 2 -->
-                <div class="card">
+            <!-- 기능 2 -->
+            <div class="card">
+                <div class="card-header">
                     <div class="card-num">02</div>
-                    <h3>완료 5분 전 Push 알림</h3>
-                    <p>기기 가동이 완료되기 5분 전, 모바일로 자동 푸시 알림을 발송하여 세탁실 내부에서 불필요하게 대기하는 시간을 없앱니다.</p>
-                    <ul class="features-list">
-                        <li>종료 직전 맞춤 알림으로 즉각적인 회수 가능</li>
-                        <li>장시간 세탁물 방치로 인한 타 선원과의 갈등 방지</li>
-                        <li>알림 터치 시 해당 기기의 상세 정보 화면으로 즉시 연결</li>
-                    </ul>
-                    <div class="mockup-container" style="background: #0f172a; color: #fff;">
-                        <span style="color: #888; font-size: 0.8rem;">🔔 스마트 푸시 알림 (09:41)</span><br>
-                        <strong style="color: #38bdf8;">[Smart Laundry]</strong><br>
-                        "세탁기 2호기 완료 5분 전! 지금 3층 세탁실로 이동하여 회수를 준비하세요."
-                    </div>
+                    <h3>완료 5분 전 Push 알림 (OS 알림 트레이)</h3>
                 </div>
+                <p>기기 가동 완료 5분 전 모바일로 자동 Push 알림을 발송하여, 세탁실 대기 시간을 없애고 즉각적인 회수를 유도합니다.</p>
+                <ul class="features-list">
+                    <li>적시 알림으로 회수 및 순환율 극대화</li>
+                    <li>세탁물 방치로 인한 갈등 요인 원천 차단</li>
+                    <li>알림 터치 시 앱 내 상세 처리 화면으로 즉시 연결</li>
+                </ul>
 
-                <!-- 기능 3 -->
-                <div class="card">
-                    <div class="card-num">03</div>
-                    <h3>찜 기능 & 스케줄 알림</h3>
-                    <p>원하는 기기가 이미 사용 중일 때 '찜(예약)'을 걸어두면, 해당 기기가 비워지는 시점에 맞춰 맞춤형 알림을 제공합니다.</p>
-                    <ul class="features-list">
-                        <li>선실에서 이동하는 시간(약 5분)을 고려한 지능형 타이밍 알림</li>
-                        <li>내가 예약하고 대기 중인 기기만 별도로 모아보는 스케줄 탭 제공</li>
-                        <li>무한정 대기하지 않고 계획적인 세탁 스케줄링 가능</li>
-                    </ul>
-                    <div class="mockup-container">
-                        <strong>⭐ 내가 찜한 기기 목록</strong>
-                        <div style="background:#fff; padding: 10px; margin-top:5px; border-radius:6px; font-size:0.9rem;">
-                            📌 <strong>건조기 2호기:</strong> 사용 중 (15분 잔여)<br>
-                            <span style="color: #2563eb; font-size:0.8rem;">→ 완료 예정 15분 후 알림 예약 완료</span>
+                <!-- Visualization: Push Notification UI -->
+                <div class="mockup-frame">
+                    <div class="phone-top"></div>
+                    <div class="lockscreen-bg">
+                        <div class="time-box">
+                            <div class="hour">09:41</div>
+                            <div class="date">6월 8일 월요일</div>
+                        </div>
+                        
+                        <div class="notif-tray">
+                            <div class="app-icon-circle">LG</div>
+                            <div class="notif-info">
+                                <div class="notif-header">
+                                    <span class="notif-appname"><img src="[https://www.laundrygo.com/favicon.ico](https://www.laundrygo.com/favicon.ico)" class="app-icon-logo"> Smart Laundry</span>
+                                    <span class="notif-time">방금 전</span>
+                                </div>
+                                <div class="notif-msg">
+                                    <strong style="color: #0f172a; display: block; margin-bottom: 2px;">세탁기 2호기 완료 5분 전!</strong>
+                                    지금 3층 세탁실로 이동하여 회수할 준비를 해 주세요. (HD HHI x LG)
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
+            </div>
 
-                <!-- 기능 4 -->
-                <div class="card">
-                    <div class="card-num">04</div>
-                    <h3>QR 코드 웹 접속 지원</h3>
-                    <p>앱을 설치하지 않거나 스마트폰 용량이 부족한 선원, 단기 승선원들도 QR 스캔 한 번으로 웹 브라우저에서 동일한 서비스를 이용할 수 있습니다.</p>
-                    <ul class="features-list">
-                        <li>세탁실 벽면 및 각 개인 선실 내 전용 QR 코드 부착</li>
-                        <li>모바일 앱과 동일한 반응형 UI 제공으로 즉각적인 적응 가능</li>
-                        <li>App 다운로드 허들이 없어 선내 모든 스마트폰에서 즉시 활성화</li>
-                    </ul>
-                    <div class="mockup-container" style="text-align: center; padding: 30px 20px;">
-                        <div style="width: 80px; height: 80px; background: #334155; margin: 0 auto 10px auto; color: #fff; line-height: 80px; font-size: 0.8rem; font-weight: bold; border-radius: 8px;">QR CODE</div>
-                        <span style="font-size: 0.85rem; color: #475569;">스캔 시 <code>laundry.smartship.com</code> 자동 연결</span><br>
-                        <small style="color: #ef4444;">* 웹 접속 시 웹 브라우저 정책상 푸시 알림은 미지원됩니다.</small>
+            <!-- 기능 3 -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-num">03</div>
+                    <h3>찜 기능 & 지능형 스케줄 알림 (모바일 앱)</h3>
+                </div>
+                <p>이용하려는 기기가 이미 사용 중일 때 '찜(예약)'을 걸어두면, 해당 기기 가동 완료 타이밍에 맞춰 우선권 알림을 제공합니다.</p>
+                <ul class="features-list">
+                    <li>이동 시간(약 5분)을 고려한 지능형 타이밍 알림 송출</li>
+                    <li>개인 예약 목록에서 대기 중 기기 모아보기 제공</li>
+                    <li>계획적인 세탁 스케줄링으로 생활 스트레스 제로화</li>
+                </ul>
+
+                <!-- Visualization: Reservation (찜) UI -->
+                <div class="mockup-frame">
+                    <div class="phone-top"></div>
+                    <div class="app-bg">
+                        <div class="app-header" style="margin-bottom: 5px;">
+                            <span class="app-title">내 예약 리스트</span>
+                        </div>
+                        <div class="reserv-tab">
+                            <span class="reserv-tab-item active">예약 중 (2)</span>
+                            <span class="reserv-tab-item">완료 내역</span>
+                        </div>
+                        
+                        <div class="reserv-card">
+                            <div class="star-box">★</div>
+                            <div class="machine-icon-box">D</div>
+                            <div class="machine-info">
+                                <div class="machine-id">건조기 2호기</div>
+                                <div class="machine-status">사용 중 (다른 선원 이용)</div>
+                                <span style="font-size: 0.7rem; color: #2563eb; background: #dbeafe; padding: 2px 5px; border-radius: 4px; margin-top: 3px; display: inline-block;">→ 완료 시 알림 예약</span>
+                            </div>
+                            <div class="machine-time">15분 대기</div>
+                        </div>
+
+                         <div class="machine-card">
+                            <div class="progress-circle avail" style="border-color: #22c55e;"></div>
+                            <div class="machine-icon-box" style="background:#dcfce7; color:#16a34a;">W</div>
+                            <div class="machine-info">
+                                <div class="machine-id">세탁기 4호기</div>
+                                <div class="machine-status avail">이용 가능 (찜 해제 필요)</div>
+                            </div>
+                            <div class="machine-time">즉시 사용</div>
+                        </div>
+
                     </div>
                 </div>
             </div>
-        </section>
 
-        <!-- 도입 기대 효과 -->
-        <section style="margin-top: 40px;">
-            <h2 class="section-title">도입 기대 효과</h2>
-            <p class="section-desc">HD현대중공업의 선박 가치를 높이는 프리미엄 인프라 솔루션</p>
-            <table class="table-styled" style="text-align: left;">
-                <thead>
-                    <tr>
-                        <th style="width: 30%; text-align: left;">구분</th>
-                        <th style="text-align: left;">주요 기대 효과</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><strong>선원 복지 혁신</strong></td>
-                        <td>고단한 장기 운항 중 가사 노동의 피로를 최소화하고, 선내 공동체 생활에서 발생할 수 있는 세탁물 분쟁 요소를 원천 차단하여 승선 만족도를 극대화합니다.</td>
-                    </tr>
-                    <tr>
-                        <td><strong>선박 수주 경쟁력 차별화</strong></td>
-                        <td>단순한 하드웨어 건조를 넘어, 선원 중심의 첨단 스마트 디지털 라이프 인프라를 기본 탑재함으로써 글로벌 선주사 대상 수주 제안 시 독점적 우위를 선점합니다.</td>
-                    </tr>
-                    <tr>
-                        <td><strong>효율적인 데이터 관리</strong></td>
-                        <td>IoT 대시보드를 통해 세탁 시설 가동률, 전력 소비량, 장비 고장 예측 등의 데이터를 분석하여 선박의 효율적 자원 관리를 지원합니다.</td>
-                    </tr>
-                </tbody>
-            </table>
-        </section>
+            <!-- 기능 4 -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-num">04</div>
+                    <h3>QR 코드 웹 접속 지원 (모바일 브라우저)</h3>
+                </div>
+                <p>앱을 설치하지 않거나 데이터 용량이 부족한 선원, 단기 승선원들도 QR 스캔 한 번으로 웹 브라우저에서 동일한 서비스를 이용할 수 있습니다.</p>
+                <ul class="features-list">
+                    <li>객실 및 세탁실 내 QR 스티커 부착</li>
+                    <li>앱과 동일한 반응형 UI 제공으로 즉각적인 적응 가능</li>
+                    <li>App 다운로드 허들이 없어 선내 모든 스마트폰에서 즉시 활성화</li>
+                </ul>
 
-    </main>
+                <!-- Visualization: QR Web Access UI -->
+                <div style="display: flex; gap: 20px; align-items: start; margin-top: 10px;">
+                    <div class="mockup-frame">
+                        <div class="phone-top"></div>
+                        <div class="browser-mockup">
+                            <div class="browser-header">
+                                <span style="font-size: 1rem;">•••</span>
+                                <div class="url-bar">laundry.smartship.com</div>
+                            </div>
+                            <div class="browser-content app-bg">
+                                <div class="app-header" style="padding-top: 0px;">
+                                    <span class="app-title" style="font-size: 0.9rem;">세탁실 실시간 현황</span>
+                                    <span class="app-loc" style="font-size: 0.7rem;">📍 3층 대형세탁실</span>
+                                </div>
+                                <li class="simplified-list-item machine-card">
+                                     <div class="machine-icon-box" style="font-size: 0.9rem; width: 25px; height: 25px;">W</div>
+                                     <span style="font-size: 0.8rem; flex: 1;">세탁기 1호기</span>
+                                     <span style="font-size: 0.8rem;">23분</span>
+                                </li>
+                                <li class="simplified-list-item machine-card">
+                                     <div class="machine-icon-box" style="font-size: 0.9rem; width: 25px; height: 25px;">W</div>
+                                     <span style="font-size: 0.8rem; flex: 1; color: #16a34a;">세탁기 3호기</span>
+                                     <span style="font-size: 0.8rem; color: #16a34a;">가능</span>
+                                </li>
+                                <li class="simplified-list-item machine-card">
+                                     <div class="machine-icon-box" style="font-size: 0.9rem; width: 25px; height: 25px;">D</div>
+                                     <span style="font-size: 0.8rem; flex: 1;">건조기 1호기</span>
+                                     <span style="font-size: 0.8rem;">15분</span>
+                                </li>
+                                <li style="text-align: center; color: #ef4444; font-size: 0.7rem; margin-top: 10px;">* 푸시 알림은 미지원됩니다.</li>
+                            </div>
+                        </div>
+                    </div>
 
-    <footer class="footer">
-        <p>© 2026 HD현대중공업 x Laundry24/LaundryGo Project. All Rights Reserved.</p>
-        <p style="font-size: 0.8rem; margin-top: 10px; color: #64748b;">본 제안서는 스마트 선박 인프라 고도화를 위해 작성된 대외비 문서입니다.</p>
-    </footer>
+                    <!-- Sticker mockup on the right -->
+                    <div class="sticker-card">
+                        <strong style="color: #0f172a; font-size: 0.8rem;">Laundry24/LG</strong>
+                        <p style="font-size: 0.7rem; color: #64748b; margin-top: 3px;">세탁실 객실용 QR</p>
+                        <div style="background-color: #334155; width: 60px; height: 60px; margin: 15px auto; line-height: 60px; color: #fff;">QR</div>
+                        <span class="qr-placeholder" style="color: #38bdf8;">스캔하세요</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-</body>
-</html>
+</main>
+
+<footer class="footer">
+    <p>© 2026 HD현대중공업 x Laundry24/LaundryGo Project. All Rights Reserved.</p>
+</footer>
+
+```
