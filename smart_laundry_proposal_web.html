@@ -1,396 +1,845 @@
-## 웹페이지 제안서 고도화: 4대 핵심기능 모바일 UI 구현
+html_content = """<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HD현대중공업 x Laundry24/LaundryGo 스마트 세탁 솔루션 제안서</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap');
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Noto Sans KR', sans-serif;
+        }
+        
+        body {
+            background-color: #f8fafc;
+            color: #1e293b;
+            line-height: 1.6;
+        }
+        
+        /* Navigation Bar */
+        .navbar {
+            background-color: #0f172a;
+            color: #ffffff;
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+        
+        .navbar .brand {
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: #38bdf8;
+            letter-spacing: -0.03em;
+        }
+        
+        .navbar .partner {
+            font-weight: 500;
+            font-size: 0.95rem;
+            color: #94a3b8;
+            background: rgba(255,255,255,0.05);
+            padding: 6px 14px;
+            border-radius: 20px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%);
+            color: #ffffff;
+            padding: 120px 40px 100px 40px;
+            text-align: center;
+            position: relative;
+        }
+        
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 24px;
+            letter-spacing: -0.04em;
+            line-height: 1.3;
+        }
+        
+        .hero p {
+            font-size: 1.25rem;
+            color: #cbd5e1;
+            max-width: 850px;
+            margin: 0 auto 40px auto;
+            font-weight: 300;
+        }
+        
+        .hero strong {
+            color: #38bdf8;
+            font-weight: 700;
+        }
+        
+        .badge {
+            display: inline-block;
+            background-color: #38bdf8;
+            color: #0f172a;
+            padding: 6px 18px;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 0.85rem;
+            margin-bottom: 24px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        
+        /* Main Container */
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 80px 20px;
+        }
+        
+        .section-title {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: #0f172a;
+            margin-bottom: 12px;
+            text-align: center;
+            letter-spacing: -0.03em;
+        }
+        
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 4px;
+            background-color: #38bdf8;
+            margin: 16px auto 0 auto;
+            border-radius: 2px;
+        }
+        
+        .section-desc {
+            text-align: center;
+            color: #64748b;
+            margin-bottom: 60px;
+            font-size: 1.15rem;
+            font-weight: 300;
+        }
+        
+        /* Two Column Layout for Features */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(550px, 1fr));
+            gap: 40px;
+            margin-bottom: 80px;
+        }
+        
+        .card {
+            background: #ffffff;
+            border-radius: 24px;
+            padding: 40px;
+            box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.03), 0 10px 30px -5px rgba(15, 23, 42, 0.05);
+            border: 1px solid #f1f5f9;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        
+        .card-meta {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .card-num {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: #38bdf8;
+            margin-right: 16px;
+            font-family: monospace;
+        }
+        
+        .card h3 {
+            font-size: 1.45rem;
+            font-weight: 700;
+            color: #0f172a;
+            letter-spacing: -0.02em;
+        }
+        
+        .card-text {
+            color: #475569;
+            margin-bottom: 24px;
+            font-size: 1.05rem;
+        }
+        
+        .features-list {
+            list-style: none;
+            margin-bottom: 35px;
+        }
+        
+        .features-list li {
+            position: relative;
+            padding-left: 26px;
+            margin-bottom: 12px;
+            color: #334155;
+            font-size: 0.95rem;
+        }
+        
+        .features-list li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: #38bdf8;
+            font-weight: 700;
+            font-size: 1.05rem;
+        }
+        
+        /* ===================================================
+           CSS MOBILE MOCKUP ARCHITECTURE
+           =================================================== */
+        .mockup-wrapper {
+            background-color: #f8fafc;
+            border-radius: 20px;
+            padding: 30px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: 1px solid #e2e8f0;
+            margin-top: auto;
+        }
+        
+        .phone-frame {
+            width: 290px;
+            height: 540px;
+            background: #ffffff;
+            border: 12px solid #1e293b;
+            border-bottom: 16px solid #1e293b;
+            border-radius: 36px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+            overflow: hidden;
+            position: relative;
+            user-select: none;
+        }
+        
+        /* Notch / Dynamic Island style */
+        .phone-notch {
+            width: 110px;
+            height: 20px;
+            background: #1e293b;
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            border-bottom-left-radius: 12px;
+            border-bottom-right-radius: 12px;
+            z-index: 100;
+        }
+        
+        /* UI Content Containers */
+        .phone-screen {
+            height: 100%;
+            background-color: #f1f5f9;
+            padding: 30px 14px 14px 14px;
+            display: flex;
+            flex-direction: column;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        }
+        
+        /* UI Element: App Header */
+        .ui-app-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+            padding: 0 4px;
+        }
+        
+        .ui-app-title {
+            font-weight: 700;
+            font-size: 1.05rem;
+            color: #0f172a;
+        }
+        
+        .ui-app-badge {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: #0284c7;
+            background-color: #e0f2fe;
+            padding: 2px 8px;
+            border-radius: 6px;
+        }
+        
+        /* UI Element: Status Cards (UI 01) */
+        .ui-card-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            overflow-y: auto;
+        }
+        
+        .ui-item {
+            background: #ffffff;
+            border-radius: 14px;
+            padding: 12px;
+            border: 1px solid #e2e8f0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+        }
+        
+        .ui-item-left {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .ui-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.85rem;
+        }
+        
+        .ui-icon.wash { background-color: #e0f2fe; color: #0384c7; }
+        .ui-icon.dry { background-color: #fae8ff; color: #a21caf; }
+        .ui-icon.avail { background-color: #dcfce7; color: #15803d; }
+        
+        .ui-details {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .ui-name {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: #1e293b;
+        }
+        
+        .ui-status-text {
+            font-size: 0.75rem;
+            color: #64748b;
+        }
+        
+        .ui-status-text.busy { color: #ef4444; font-weight: 500; }
+        .ui-status-text.avail-t { color: #22c55e; font-weight: 500; }
+        
+        .ui-meta-right {
+            text-align: right;
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: #0f172a;
+        }
+        
+        /* UI Element: OS Lock Screen & Push Notification (UI 02) */
+        .ui-lockscreen {
+            background: linear-gradient(180deg, #1e3a8a 0%, #0f172a 100%);
+            height: 100%;
+            padding: 40px 16px 16px 16px;
+            color: #ffffff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .ui-ls-time {
+            font-size: 2.8rem;
+            font-weight: 300;
+            margin-bottom: 2px;
+            letter-spacing: -0.02em;
+        }
+        
+        .ui-ls-date {
+            font-size: 0.85rem;
+            opacity: 0.8;
+            margin-bottom: 60px;
+        }
+        
+        .ui-push-banner {
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(10px);
+            border-radius: 18px;
+            padding: 14px;
+            color: #1e293b;
+            width: 100%;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .ui-push-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 4px;
+        }
+        
+        .ui-push-app {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-weight: 700;
+            font-size: 0.75rem;
+            color: #0f172a;
+        }
+        
+        .ui-push-icon {
+            width: 16px;
+            height: 16px;
+            background: #0f172a;
+            border-radius: 4px;
+            color: #38bdf8;
+            font-size: 0.55rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .ui-push-time {
+            font-size: 0.7rem;
+            color: #64748b;
+        }
+        
+        .ui-push-title {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: #0f172a;
+            margin-bottom: 2px;
+        }
+        
+        .ui-push-body {
+            font-size: 0.8rem;
+            color: #334155;
+            line-height: 1.4;
+        }
+        
+        /* UI Element: Reservation (UI 03) */
+        .ui-tabs {
+            display: flex;
+            background: #e2e8f0;
+            padding: 3px;
+            border-radius: 10px;
+            margin-bottom: 14px;
+        }
+        
+        .ui-tab {
+            flex: 1;
+            text-align: center;
+            font-size: 0.8rem;
+            padding: 6px 0;
+            border-radius: 8px;
+            color: #64748b;
+            font-weight: 500;
+        }
+        
+        .ui-tab.active {
+            background: #ffffff;
+            color: #0f172a;
+            font-weight: 700;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+        
+        .ui-star {
+            color: #f59e0b;
+            font-size: 1rem;
+        }
+        
+        .ui-badge-reserved {
+            background-color: #ffedd5;
+            color: #ea580c;
+            font-size: 0.65rem;
+            font-weight: 700;
+            padding: 2px 6px;
+            border-radius: 4px;
+            margin-top: 2px;
+            align-self: flex-start;
+        }
+        
+        /* UI Element: Mobile Browser Framework (UI 04) */
+        .ui-browser-bar {
+            background: #e2e8f0;
+            padding: 6px 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border-top-left-radius: 0;
+            border-top-right-radius: 0;
+        }
+        
+        .ui-browser-dots {
+            display: flex;
+            gap: 4px;
+        }
+        
+        .ui-dot { width: 6px; height: 6px; background: #94a3b8; border-radius: 50%; }
+        
+        .ui-url-input {
+            background: #ffffff;
+            border-radius: 6px;
+            flex: 1;
+            font-size: 0.7rem;
+            color: #475569;
+            padding: 3px 8px;
+            text-align: center;
+            font-family: monospace;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        
+        .qr-layout-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            width: 100%;
+        }
+        
+        .qr-sticker-mockup {
+            background: #ffffff;
+            border: 2px dashed #38bdf8;
+            border-radius: 16px;
+            padding: 16px;
+            text-align: center;
+            width: 180px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.02);
+        }
+        
+        .qr-sticker-title {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: #0f172a;
+            margin-bottom: 2px;
+        }
+        
+        .qr-sticker-partner {
+            font-size: 0.6rem;
+            color: #64748b;
+            margin-bottom: 12px;
+        }
+        
+        .qr-code-box {
+            width: 80px;
+            height: 80px;
+            background: #0f172a;
+            margin: 0 auto 10px auto;
+            position: relative;
+            padding: 6px;
+        }
+        
+        /* Mimic QR code internal patterns */
+        .qr-pattern {
+            width: 100%;
+            height: 100%;
+            border: 2px solid #fff;
+            position: relative;
+        }
+        .qr-sq { position: absolute; width: 16px; height: 16px; border: 3px solid #fff; }
+        .qr-sq.tl { top: 2px; left: 2px; }
+        .qr-sq.tr { top: 2px; right: 2px; }
+        .qr-sq.bl { bottom: 2px; left: 2px; }
+        
+        .qr-sticker-desc {
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: #0284c7;
+        }
+        
+        /* Footer */
+        .footer {
+            background-color: #0f172a;
+            color: #94a3b8;
+            padding: 50px 20px;
+            text-align: center;
+            font-size: 0.9rem;
+            border-top: 1px solid #1e293b;
+            margin-top: 60px;
+        }
+        
+        .footer p { margin-bottom: 8px; }
+        
+        /* Responsive Breakpoints */
+        @media (max-width: 768px) {
+            .grid-2 { grid-template-columns: 1fr; }
+            .hero h1 { font-size: 2.2rem; }
+            .navbar { padding: 20px; flex-direction: column; gap: 10px; }
+        }
+    </style>
+</head>
+<body>
 
-HD현대중공업 제안서의 구체성을 높이기 위해, 기존 제안서의 '4대 핵심기능' 섹션을 텍스트 기반 설명에서 실제 모바일 앱/웹 UI 모의구현(Mockup)을 포함한 시각적 카드로 전면 업그레이드했습니다.
+    <nav class="navbar">
+        <div class="brand">Smart Ship Laundry Management</div>
+        <div class="partner">HD현대중공업 x Laundry24/LaundryGo</div>
+    </nav>
 
-이를 통해 선원이 실제 앱을 열었을 때 마주할 화면 구성을 미리 보여줌으로써, 제안의 실현 가능성을 직관적으로 전달하고 스마트십 인프라로서의 완성도를 강조합니다.
+    <header class="hero">
+        <span class="badge">HHI Smart Vessel Project Proposal</span>
+        <h1>IoT·모바일 앱·QR 연동 기반<br>선상 스마트 세탁실 관리 솔루션</h1>
+        <p>대한민국 조선 기술의 글로벌 리더 <strong>HD현대중공업</strong>의 차세대 스마트 선박을 위하여, 국가대표 스마트 무인 인프라 <strong>Laundry24 / LaundryGo</strong>의 고도화된 모바일 운영 UI와 시스템 아키텍처를 결합한 최고 존엄의 선원 복지 플랫폼을 제안합니다.</p>
+    </header>
 
-### 🛠️ 주요 수정 사항 요약
-
-1. **시각적 Mockup 프레임:** 각 기능 카드 내부에 표준 모바일(phone) 프레임을 CSS로 구현하여 실제 화면 느낌을 전달합니다.
-2. **01 실시간 현황:** 텍스트 테이블 대신, 세탁기/건조기 아이콘, 진행률 바, 실시간 잔여 시간 카운트다운을 시각화한 리스트 UI로 변경했습니다.
-3. **02 Push 알림:** iOS 표준 알림 트레이 형식을 모방하여, 잠금 화면에서 HD HHI 로고와 함께 "세탁기 2호기 완료 5분 전" 알림이 뜨는 모습을 구현했습니다.
-4. **03 찜 기능:** 내가 예약한 기기 전용 탭 화면을 구현하여, '예약 중' 상태와 곧 이용 가능함을 알리는 타이머를 시각화했습니다.
-5. **04 QR 웹 접속:** 모바일 브라우저(Safari/Chrome) 프레임 내부에 실시간 현황 화면이 로딩되는 모습을 구현하고, 실제 부착될 QR 스티커 Mockup을 추가했습니다.
-
----
-
-[file-tag: smart_laundry_proposal_web_v2.html]
-
-### 📂 적용 방법
-
-1. 위 링크의 HTML 코드를 복사합니다.
-2. 기존 `smart_laundry_proposal_web.html` 파일의 내용을 전체 삭제한 후 붙여넣거나, 새 HTML 파일로 저장합니다.
-3. 웹 브라우저로 파일을 열어 업데이트된 시각적 UI를 확인합니다.
-
-HD현대중공업 제안 시, 이 고도화된 웹페이지를 스크린에 띄워 발표하거나 로컬 파일로 전달하면 훨씬 더 구체적이고 매력적인 솔루션으로 인식될 것입니다.
-
-```
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Noto Sans KR', sans-serif; }
-    body { background-color: #f8faee; color: #1e293b; line-height: 1.6; }
-    
-    /* Navigation */
-    .navbar { background-color: #0f172a; color: #ffffff; padding: 20px 40px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); }
-    .navbar .brand { font-weight: 700; font-size: 1.2rem; color: #38bdf8; }
-    .navbar .partner { font-weight: 500; font-size: 1rem; color: #94a3b8; }
-    
-    /* Hero */
-    .hero { background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%); color: #ffffff; padding: 100px 40px; text-align: center; }
-    .hero h1 { font-size: 2.8rem; font-weight: 700; margin-bottom: 20px; letter-spacing: -0.05em; }
-    .hero p { font-size: 1.3rem; color: #cbd5e1; max-width: 800px; margin: 0 auto 40px auto; font-weight: 300; }
-    .badge { display: inline-block; background-color: #38bdf8; color: #0f172a; padding: 6px 16px; border-radius: 20px; font-weight: 600; font-size: 0.9rem; margin-bottom: 20px; }
-    
-    /* Containers */
-    .container { max-width: 1200px; margin: 0 auto; padding: 60px 20px; }
-    .section-title { font-size: 2rem; font-weight: 700; color: #0f172a; margin-bottom: 15px; text-align: center; position: relative; }
-    .section-title::after { content: ''; display: block; width: 50px; height: 4px; background-color: #38bdf8; margin: 15px auto 0 auto; border-radius: 2px; }
-    .section-desc { text-align: center; color: #64748b; margin-bottom: 50px; font-size: 1.1rem; }
-    
-    /* Features Grid - 업그레이드됨 */
-    .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(500px, 1fr)); gap: 40px; margin-bottom: 60px; }
-    .card { background: #ffffff; border-radius: 16px; padding: 40px; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05); border: 1px solid #e2e8f0; }
-    .card-header { display: flex; align-items: center; margin-bottom: 25px; }
-    .card-num { font-size: 2rem; font-weight: 700; color: #38bdf8; margin-right: 15px; }
-    .card h3 { font-size: 1.4rem; font-weight: 700; color: #0f172a; }
-    .card > p { color: #475569; margin-bottom: 30px; font-size: 1rem; }
-    .features-list { list-style: none; margin-bottom: 30px; }
-    .features-list li { position: relative; padding-left: 25px; margin-bottom: 10px; color: #334155; }
-    .features-list li::before { content: '✓'; position: absolute; left: 0; color: #38bdf8; font-weight: bold; }
-
-    /* =========================================
-       MOBILE MOCKUP CSS (The new visualization)
-       ========================================= */
-    .mockup-frame {
-        width: 280px; height: 500px; background: #fff;
-        border: 12px solid #334155; border-radius: 36px;
-        box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1), 0 10px 10px -5px rgba(0,0,0,0.04);
-        overflow: hidden; margin: 0 auto;
-        position: relative; font-family: sans-serif;
-        border-bottom: 15px solid #334155;
-    }
-    .mockup-frame .phone-top {
-        width: 120px; height: 18px; background: #334155;
-        position: absolute; top: 0; left: 50%; transform: translateX(-50%);
-        border-bottom-left-radius: 10px; border-bottom-right-radius: 10px;
-    }
-    
-    /* Common Mobile UI Styles */
-    .app-bg { background-color: #f1f5f9; height: 100%; padding: 25px 15px 15px 15px; }
-    .app-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
-    .app-title { font-weight: bold; font-size: 1.1rem; color: #0f172a; }
-    .app-loc { font-size: 0.8rem; color: #38bdf8; font-weight: bold; }
-    
-    /* 01 Real-time Status UI */
-    .machine-list { list-style: none; }
-    .machine-card {
-        background: #fff; border-radius: 12px; padding: 12px;
-        margin-bottom: 10px; border: 1px solid #e2e8f0;
-        display: flex; align-items: center;
-    }
-    .machine-icon-box {
-        width: 35px; height: 35px; background-color: #dbeafe;
-        border-radius: 8px; color: #2563eb; font-weight: bold;
-        display: flex; align-items: center; justify-content: center;
-        margin-right: 12px; font-size: 1.2rem;
-    }
-    .machine-info { flex: 1; }
-    .machine-id { font-weight: bold; font-size: 0.9rem; color: #1e293b; }
-    .machine-status { font-size: 0.8rem; color: #ef4444; }
-    .machine-status.avail { color: #22c55e; }
-    .machine-time { font-size: 0.9rem; font-weight: bold; color: #0f172a; text-align: right; }
-    .progress-circle {
-        width: 20px; height: 20px; border-radius: 50%;
-        border: 3px solid #e2e8f0; position: relative; margin-right: 10px;
-    }
-    .progress-circle.active { border-color: #38bdf8; border-top-color: #0f172a; }
-
-    /* 02 Push Notification UI (Lockscreen) */
-    .lockscreen-bg { background: linear-gradient(180deg, #1e3a8a 0%, #1e293b 100%); height: 100%; padding: 30px 20px; }
-    .time-box { text-align: center; color: #fff; margin-bottom: 60px; margin-top: 20px;}
-    .time-box .hour { font-size: 3rem; font-weight: lighter; }
-    .time-box .date { font-size: 0.9rem; font-weight: normal; margin-top: -10px; opacity: 0.8; }
-    .notif-tray {
-        background: rgba(255, 255, 255, 0.9); border-radius: 14px;
-        padding: 10px; display: flex; align-items: start;
-        box-shadow: 0 4px 6px rgba(0,0,0,0.1); backdrop-filter: blur(5px);
-    }
-    .app-icon-circle {
-        width: 20px; height: 20px; background-color: #0f172a;
-        border-radius: 5px; color: #38bdf8; font-size: 0.7rem;
-        display: flex; align-items: center; justify-content: center;
-        margin-right: 8px; font-weight: bold; margin-top: 3px;
-    }
-    .notif-info { flex: 1; font-size: 0.8rem;}
-    .notif-header { display: flex; justify-content: space-between; margin-bottom: 2px; }
-    .notif-appname { font-weight: bold; color: #0f172a; }
-    .notif-time { color: #64748b; font-size: 0.75rem; }
-    .notif-msg { color: #334155; font-weight: normal; line-height: 1.3;}
-    .app-icon-logo { height: 12px; margin-bottom: -1px;}
-
-    /* 03 Reservation ("찜") UI */
-    .reserv-tab { border-bottom: 2px solid #e2e8f0; display: flex; margin-bottom: 15px; padding-bottom: 0px; }
-    .reserv-tab-item { padding: 8px 15px; font-size: 0.85rem; color: #64748b; font-weight: normal; }
-    .reserv-tab-item.active { border-bottom: 2px solid #0f172a; color: #0f172a; font-weight: bold; }
-    .reserv-card {
-        background: #fff; border-radius: 12px; padding: 12px;
-        margin-bottom: 10px; border: 1px solid #dbeafe;
-        display: flex; align-items: center;
-    }
-    .star-box { color: #38bdf8; font-size: 1.2rem; margin-right: 12px; }
-    
-    /* 04 QR Web Access UI */
-    .browser-mockup { height: 100%; border-radius: 20px; overflow: hidden; background: #fff;}
-    .browser-header { background-color: #e2e8f0; padding: 8px 10px; display: flex; align-items: center; font-size: 0.75rem; color: #64748b;}
-    .url-bar { background: #fff; border-radius: 6px; flex: 1; padding: 4px 10px; margin-left: 10px;}
-    .browser-content { padding: 15px; background: #f1f5f9; height: 100%; simplified: true; }
-    .simplified-list-item { background: #fff; border-radius: 8px; height: 35px; margin-bottom: 8px;}
-
-    /* Stickers mockup */
-    .sticker-card {
-         width: 120px; height: 150px; background: #fff; 
-         border: 2px dashed #38bdf8; border-radius: 10px; padding: 15px;
-         text-align: center; margin-top: 15px;
-    }
-    .qr-placeholder { font-weight: bold; font-size: 0.9rem;}
-
-</style>
-
-```
-
-```
-<nav class="navbar">
-    <div class="brand">Smart Ship Laundry Solution</div>
-    <div class="partner">HD현대중공업 x Laundry24/LaundryGo</div>
-</nav>
-
-<header class="hero">
-    <span class="badge">B2B 스마트 선박 솔루션 제안</span>
-    <h1>IoT·앱·QR로<br>선상 생활의 편의를 혁신하다</h1>
-    <p>HD현대중공업 스마트 선박에 탑재되는 차세대 선원 복지 플랫폼 프로젝트입니다.</p>
-</header>
-
-<main class="container">
-    
-    <!-- 핵심 기능 상세 Section -->
-    <section>
-        <h2 class="section-title">4대 핵심 기능 & 모바일 UI</h2>
-        <p class="section-desc">선원의 동선을 최적화하고 불편을 제로화하는 스마트 서비스 화면 구성</p>
+    <main class="container">
+        
+        <h2 class="section-title">스마트 인프라 4대 핵심 기능</h2>
+        <p class="section-desc">실제 선원이 직관적으로 마주하게 될 모바일 시스템 전용 UI/UX 디자인 모의구현</p>
         
         <div class="grid-2">
-            <!-- 기능 1 -->
+            
             <div class="card">
-                <div class="card-header">
-                    <div class="card-num">01</div>
-                    <h3>실시간 현황 조회 (모바일 앱)</h3>
+                <div>
+                    <div class="card-meta">
+                        <div class="card-num">01</div>
+                        <h3>실시간 현황 조회 (모바일 네이티브 앱)</h3>
+                    </div>
+                    <p class="card-text">선원들이 세탁실까지 무의미하게 왕복하지 않고, 선실이나 휴게실 내에서 전체 장비의 가동 상태를 실시간 분 단위로 투명하게 모니터링합니다.</p>
+                    <ul class="features-list">
+                        <li>세탁기 및 건조기의 고유 호기별 동작 상태 트래킹</li>
+                        <li>종료까지 남아있는 정확한 잔여 시간 동적 카운트다운</li>
+                        <li>가용 장비 직관화 시스템으로 불필요 선내 동선 100% 제거</li>
+                    </ul>
                 </div>
-                <p>직접 세탁실을 방문하지 않고, 선실 내에서 앱으로 모든 기기의 상태와 잔여 시간을 분 단위로 파악할 수 있습니다.</p>
-                <ul class="features-list">
-                    <li>사용 여부 및 잔여 가동 시간 즉시 확인</li>
-                    <li>실시간 동기화로 오차 없는 최신 정보 제공</li>
-                    <li>이용 가능 기기 시각화로 불필요 동선 제거</li>
-                </ul>
                 
-                <!-- Visualization: Real-time Status UI -->
-                <div class="mockup-frame">
-                    <div class="phone-top"></div>
-                    <div class="app-bg">
-                        <div class="app-header">
-                            <span class="app-title">세탁실 현황</span>
-                            <span class="app-loc">📍 3층 대형세탁실</span>
+                <div class="mockup-wrapper">
+                    <div class="phone-frame">
+                        <div class="phone-notch"></div>
+                        <div class="phone-screen">
+                            <div class="ui-app-header">
+                                <span class="ui-app-title">세탁실 현황</span>
+                                <span class="ui-app-badge">3층 메인실</span>
+                            </div>
+                            <div class="ui-card-list">
+                                <div class="ui-item">
+                                    <div class="ui-item-left">
+                                        <div class="ui-icon wash">W</div>
+                                        <div class="ui-details">
+                                            <span class="ui-name">세탁기 1호기</span>
+                                            <span class="ui-status-text busy">가동 중 (표준세탁)</span>
+                                        </div>
+                                    </div>
+                                    <span class="ui-meta-right">23분 남음</span>
+                                </div>
+                                <div class="ui-item">
+                                    <div class="ui-item-left">
+                                        <div class="ui-icon wash">W</div>
+                                        <div class="ui-details">
+                                            <span class="ui-name">세탁기 2호기</span>
+                                            <span class="ui-status-text busy">가동 중 (탈수 단계)</span>
+                                        </div>
+                                    </div>
+                                    <span class="ui-meta-right" style="color:#ef4444;">8분 남음</span>
+                                </div>
+                                <div class="ui-item">
+                                    <div class="ui-item-left">
+                                        <div class="ui-icon avail">W</div>
+                                        <div class="ui-details">
+                                            <span class="ui-name">세탁기 3호기</span>
+                                            <span class="ui-status-text">대기 중</span>
+                                        </div>
+                                    </div>
+                                    <span class="ui-meta-right" style="color:#22c55e;">이용 가능</span>
+                                </div>
+                                <div class="ui-item">
+                                    <div class="ui-item-left">
+                                        <div class="ui-icon dry">D</div>
+                                        <div class="ui-details">
+                                            <span class="ui-name">건조기 1호기</span>
+                                            <span class="ui-status-text busy">가동 중 (표준건조)</span>
+                                        </div>
+                                    </div>
+                                    <span class="ui-meta-right">15분 남음</span>
+                                </div>
+                            </div>
                         </div>
-                        <ul class="machine-list">
-                            <li class="machine-card">
-                                <div class="progress-circle active"></div>
-                                <div class="machine-icon-box">W</div>
-                                <div class="machine-info">
-                                    <div class="machine-id">세탁기 1호기</div>
-                                    <div class="machine-status">사용 중 (표준 코스)</div>
-                                </div>
-                                <div class="machine-time">23분 남음</div>
-                            </li>
-                            <li class="machine-card">
-                                <div class="progress-circle active"></div>
-                                <div class="machine-icon-box">W</div>
-                                <div class="machine-info">
-                                    <div class="machine-id">세탁기 2호기</div>
-                                    <div class="machine-status">완료 직전</div>
-                                </div>
-                                <div class="machine-time" style="color: #ef4444;">8분 남음</div>
-                            </li>
-                            <li class="machine-card">
-                                <div class="progress-circle"></div>
-                                <div class="machine-icon-box" style="background:#dcfce7; color:#16a34a;">W</div>
-                                <div class="machine-info">
-                                    <div class="machine-id">세탁기 3호기</div>
-                                    <div class="machine-status avail">이용 가능</div>
-                                </div>
-                                <div class="machine-time">즉시 사용</div>
-                            </li>
-                            <li class="machine-card">
-                                <div class="progress-circle active"></div>
-                                <div class="machine-icon-box">D</div>
-                                <div class="machine-info">
-                                    <div class="machine-id">건조기 1호기</div>
-                                    <div class="machine-status">사용 중 (강력 건조)</div>
-                                </div>
-                                <div class="machine-time">15분 남음</div>
-                            </li>
-                        </ul>
                     </div>
                 </div>
             </div>
-
-            <!-- 기능 2 -->
+            
             <div class="card">
-                <div class="card-header">
-                    <div class="card-num">02</div>
-                    <h3>완료 5분 전 Push 알림 (OS 알림 트레이)</h3>
+                <div>
+                    <div class="card-meta">
+                        <div class="card-num">02</div>
+                        <h3>완료 5분 전 Push 자동 알림 시스템</h3>
+                    </div>
+                    <p class="card-text">매번 시계를 보며 체크할 필요 없이, 스마트 기기의 가동 완료 시점에 기가 막히게 맞춰 선실 스마트폰 화면에 팝업 알림을 자동 송출합니다.</p>
+                    <ul class="features-list">
+                        <li>작업 종료 정확히 5분 전 타겟팅 푸시 발송엔진 탑재</li>
+                        <li>세탁물 장시간 방치로 인한 선원 간 인프라 분쟁 차단</li>
+                        <li>푸시 팝업 터치 시 해당 기기 상세 상태 제어 화면 자동 랜딩</li>
+                    </ul>
                 </div>
-                <p>기기 가동 완료 5분 전 모바일로 자동 Push 알림을 발송하여, 세탁실 대기 시간을 없애고 즉각적인 회수를 유도합니다.</p>
-                <ul class="features-list">
-                    <li>적시 알림으로 회수 및 순환율 극대화</li>
-                    <li>세탁물 방치로 인한 갈등 요인 원천 차단</li>
-                    <li>알림 터치 시 앱 내 상세 처리 화면으로 즉시 연결</li>
-                </ul>
-
-                <!-- Visualization: Push Notification UI -->
-                <div class="mockup-frame">
-                    <div class="phone-top"></div>
-                    <div class="lockscreen-bg">
-                        <div class="time-box">
-                            <div class="hour">09:41</div>
-                            <div class="date">6월 8일 월요일</div>
+                
+                <div class="mockup-wrapper">
+                    <div class="phone-frame">
+                        <div class="phone-notch"></div>
+                        <div class="ui-lockscreen">
+                            <div class="ui-ls-time">09:41</div>
+                            <div class="ui-ls-date">2026년 6월 8일 월요일</div>
+                            
+                            <div class="ui-push-banner">
+                                <div class="ui-push-top">
+                                    <div class="ui-push-app">
+                                        <div class="ui-push-icon">LG</div>
+                                        <span>Smart Laundry</span>
+                                    </div>
+                                    <span class="ui-push-time">방금 전</span>
+                                </div>
+                                <div class="ui-push-title">⚠️ 세탁 완료 5분 전 알림</div>
+                                <div class="ui-push-body">
+                                    선원님께서 가동하신 <strong>세탁기 2호기</strong>가 5분 뒤 종료됩니다. 다음 이용자를 위해 3층 세탁실로 이동하여 회수를 준비해 주세요.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div>
+                    <div class="card-meta">
+                        <div class="card-num">03</div>
+                        <h3>지능형 찜 기능 & 스케줄 알림</h3>
+                    </div>
+                    <p class="card-text">모든 장비가 풀 가동 중인 혼잡 시간대에도 원하는 세탁기/건조기에 '찜하기'를 누르면 장비가 비는 순간 대기 순번에 맞춰 알림을 부여합니다.</p>
+                    <ul class="features-list">
+                        <li>선실에서 세탁실까지 도보 이동 속도를 반영한 사전 알림 알고리즘</li>
+                        <li>개인 스케줄 탭에서 내가 예약한 대기 현황만 독립적으로 트래킹</li>
+                        <li>선박 내 한정된 가사 유틸리티 자원의 회전 효율성을 극대화</li>
+                    </ul>
+                </div>
+                
+                <div class="mockup-wrapper">
+                    <div class="phone-frame">
+                        <div class="phone-notch"></div>
+                        <div class="phone-screen">
+                            <div class="ui-app-header">
+                                <span class="ui-app-title">마이 스케줄</span>
+                                <span class="ui-app-badge" style="background:#ffedd5; color:#ea580c;">★ 예약 대기 중</span>
+                            </div>
+                            <div class="ui-tabs">
+                                <div class="ui-tab active">찜한 장비 (1)</div>
+                                <div class="ui-tab">전체 현황</div>
+                            </div>
+                            <div class="ui-card-list">
+                                <div class="ui-item" style="border: 1px solid #fed7aa; background-color: #ffffff;">
+                                    <div class="ui-item-left">
+                                        <div class="ui-star">★</div>
+                                        <div class="ui-icon dry" style="background:#ffedd5; color:#ea580c;">D</div>
+                                        <div class="ui-details">
+                                            <span class="ui-name">건조기 2호기</span>
+                                            <span class="ui-status-text">현재 타인 이용 중 (잔여 15분)</span>
+                                            <span class="ui-badge-reserved">종료 즉시 우선 알림 대기</span>
+                                        </div>
+                                    </div>
+                                    <span class="ui-meta-right" style="color: #ea580c; font-size: 0.75rem;">15분 후<br>비워짐</span>
+                                </div>
+                                <div class="ui-item" style="opacity: 0.5;">
+                                    <div class="ui-item-left">
+                                        <div class="ui-icon wash">W</div>
+                                        <div class="ui-details">
+                                            <span class="ui-name">세탁기 4호기</span>
+                                            <span class="ui-status-text">가동 중</span>
+                                        </div>
+                                    </div>
+                                    <span class="ui-meta-right">31분 남음</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div>
+                    <div class="card-meta">
+                        <div class="card-num">04</div>
+                        <h3>앱 설치 제로, QR 코드 모바일 웹 연동</h3>
+                    </div>
+                    <p class="card-text">단기 승선원이나 별도 모바일 앱 설치 과정이 번거로운 인원들을 위해 객실 및 장비 벽면에 인쇄된 QR 스캔 시 작동하는 브라우저 전용 웹 뷰를 지원합니다.</p>
+                    <ul class="features-list">
+                        <li>하이브리드 웹 디자인 아키텍처로 모바일 앱과 100% 동일한 사용자 경험</li>
+                        <li>단, OS 기본 보안 브라우저 정책 기준에 따라 실시간 웹에서는 Push 알림 기능 비활성화</li>
+                        <li>어떤 종류의 안드로이드/아이폰 디바이스도 장벽 없는 완벽 호환 보장</li>
+                    </ul>
+                </div>
+                
+                <div class="mockup-wrapper">
+                    <div class="qr-layout-container">
+                        <div class="phone-frame">
+                            <div class="phone-notch"></div>
+                            <div class="phone-screen" style="padding: 0;">
+                                <div class="ui-browser-bar">
+                                    <div class="ui-browser-dots">
+                                        <div class="ui-dot"></div><div class="ui-dot"></div><div class="ui-dot"></div>
+                                    </div>
+                                    <div class="ui-url-input">https://laundry.smartship.com</div>
+                                </div>
+                                <div style="padding: 16px; background-color:#f1f5f9; flex:1;">
+                                    <div class="ui-app-header" style="margin-bottom:10px;">
+                                        <span class="ui-app-title" style="font-size:0.9rem;">HHI 스마트 웹현황</span>
+                                        <span style="font-size:0.65rem; color:#ef4444; font-weight:700;">⚠️ 웹 브라우저 모드</span>
+                                    </div>
+                                    <div class="ui-card-list">
+                                        <div class="ui-item" style="padding:8px 10px;">
+                                            <div class="ui-item-left" style="gap:6px;">
+                                                <div class="ui-icon wash" style="width:24px; height:24px; font-size:0.7rem;">W</div>
+                                                <span class="ui-name" style="font-size:0.8rem;">세탁기 1호기</span>
+                                            </div>
+                                            <span class="ui-meta-right" style="font-size:0.8rem;">23분 남음</span>
+                                        </div>
+                                        <div class="ui-item" style="padding:8px 10px;">
+                                            <div class="ui-item-left" style="gap:6px;">
+                                                <div class="ui-icon wash" style="width:24px; height:24px; font-size:0.7rem;">W</div>
+                                                <span class="ui-name" style="font-size:0.8rem;">세탁기 2호기</span>
+                                            </div>
+                                            <span class="ui-meta-right" style="font-size:0.8rem; color:#ef4444;">8분 남음</span>
+                                        </div>
+                                        <div class="ui-item" style="padding:8px 10px;">
+                                            <div class="ui-item-left" style="gap:6px;">
+                                                <div class="ui-icon avail" style="width:24px; height:24px; font-size:0.7rem;">W</div>
+                                                <span class="ui-name" style="font-size:0.8rem;">세탁기 3호기</span>
+                                            </div>
+                                            <span class="ui-meta-right" style="font-size:0.8rem; color:#22c55e;">이용 가능</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         
-                        <div class="notif-tray">
-                            <div class="app-icon-circle">LG</div>
-                            <div class="notif-info">
-                                <div class="notif-header">
-                                    <span class="notif-appname"><img src="[https://www.laundrygo.com/favicon.ico](https://www.laundrygo.com/favicon.ico)" class="app-icon-logo"> Smart Laundry</span>
-                                    <span class="notif-time">방금 전</span>
-                                </div>
-                                <div class="notif-msg">
-                                    <strong style="color: #0f172a; display: block; margin-bottom: 2px;">세탁기 2호기 완료 5분 전!</strong>
-                                    지금 3층 세탁실로 이동하여 회수할 준비를 해 주세요. (HD HHI x LG)
+                        <div class="qr-sticker-mockup">
+                            <div class="qr-sticker-title">스마트 세탁실 원터치 스캔</div>
+                            <div class="qr-sticker-partner">HD현대중공업 x Laundry24</div>
+                            <div class="qr-code-box">
+                                <div class="qr-pattern">
+                                    <div class="qr-sq tl"></div>
+                                    <div class="qr-sq tr"></div>
+                                    <div class="qr-sq bl"></div>
                                 </div>
                             </div>
+                            <div class="qr-sticker-desc">선실 벽면 부착용</div>
                         </div>
                     </div>
                 </div>
             </div>
-
-            <!-- 기능 3 -->
-            <div class="card">
-                <div class="card-header">
-                    <div class="card-num">03</div>
-                    <h3>찜 기능 & 지능형 스케줄 알림 (모바일 앱)</h3>
-                </div>
-                <p>이용하려는 기기가 이미 사용 중일 때 '찜(예약)'을 걸어두면, 해당 기기 가동 완료 타이밍에 맞춰 우선권 알림을 제공합니다.</p>
-                <ul class="features-list">
-                    <li>이동 시간(약 5분)을 고려한 지능형 타이밍 알림 송출</li>
-                    <li>개인 예약 목록에서 대기 중 기기 모아보기 제공</li>
-                    <li>계획적인 세탁 스케줄링으로 생활 스트레스 제로화</li>
-                </ul>
-
-                <!-- Visualization: Reservation (찜) UI -->
-                <div class="mockup-frame">
-                    <div class="phone-top"></div>
-                    <div class="app-bg">
-                        <div class="app-header" style="margin-bottom: 5px;">
-                            <span class="app-title">내 예약 리스트</span>
-                        </div>
-                        <div class="reserv-tab">
-                            <span class="reserv-tab-item active">예약 중 (2)</span>
-                            <span class="reserv-tab-item">완료 내역</span>
-                        </div>
-                        
-                        <div class="reserv-card">
-                            <div class="star-box">★</div>
-                            <div class="machine-icon-box">D</div>
-                            <div class="machine-info">
-                                <div class="machine-id">건조기 2호기</div>
-                                <div class="machine-status">사용 중 (다른 선원 이용)</div>
-                                <span style="font-size: 0.7rem; color: #2563eb; background: #dbeafe; padding: 2px 5px; border-radius: 4px; margin-top: 3px; display: inline-block;">→ 완료 시 알림 예약</span>
-                            </div>
-                            <div class="machine-time">15분 대기</div>
-                        </div>
-
-                         <div class="machine-card">
-                            <div class="progress-circle avail" style="border-color: #22c55e;"></div>
-                            <div class="machine-icon-box" style="background:#dcfce7; color:#16a34a;">W</div>
-                            <div class="machine-info">
-                                <div class="machine-id">세탁기 4호기</div>
-                                <div class="machine-status avail">이용 가능 (찜 해제 필요)</div>
-                            </div>
-                            <div class="machine-time">즉시 사용</div>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-
-            <!-- 기능 4 -->
-            <div class="card">
-                <div class="card-header">
-                    <div class="card-num">04</div>
-                    <h3>QR 코드 웹 접속 지원 (모바일 브라우저)</h3>
-                </div>
-                <p>앱을 설치하지 않거나 데이터 용량이 부족한 선원, 단기 승선원들도 QR 스캔 한 번으로 웹 브라우저에서 동일한 서비스를 이용할 수 있습니다.</p>
-                <ul class="features-list">
-                    <li>객실 및 세탁실 내 QR 스티커 부착</li>
-                    <li>앱과 동일한 반응형 UI 제공으로 즉각적인 적응 가능</li>
-                    <li>App 다운로드 허들이 없어 선내 모든 스마트폰에서 즉시 활성화</li>
-                </ul>
-
-                <!-- Visualization: QR Web Access UI -->
-                <div style="display: flex; gap: 20px; align-items: start; margin-top: 10px;">
-                    <div class="mockup-frame">
-                        <div class="phone-top"></div>
-                        <div class="browser-mockup">
-                            <div class="browser-header">
-                                <span style="font-size: 1rem;">•••</span>
-                                <div class="url-bar">laundry.smartship.com</div>
-                            </div>
-                            <div class="browser-content app-bg">
-                                <div class="app-header" style="padding-top: 0px;">
-                                    <span class="app-title" style="font-size: 0.9rem;">세탁실 실시간 현황</span>
-                                    <span class="app-loc" style="font-size: 0.7rem;">📍 3층 대형세탁실</span>
-                                </div>
-                                <li class="simplified-list-item machine-card">
-                                     <div class="machine-icon-box" style="font-size: 0.9rem; width: 25px; height: 25px;">W</div>
-                                     <span style="font-size: 0.8rem; flex: 1;">세탁기 1호기</span>
-                                     <span style="font-size: 0.8rem;">23분</span>
-                                </li>
-                                <li class="simplified-list-item machine-card">
-                                     <div class="machine-icon-box" style="font-size: 0.9rem; width: 25px; height: 25px;">W</div>
-                                     <span style="font-size: 0.8rem; flex: 1; color: #16a34a;">세탁기 3호기</span>
-                                     <span style="font-size: 0.8rem; color: #16a34a;">가능</span>
-                                </li>
-                                <li class="simplified-list-item machine-card">
-                                     <div class="machine-icon-box" style="font-size: 0.9rem; width: 25px; height: 25px;">D</div>
-                                     <span style="font-size: 0.8rem; flex: 1;">건조기 1호기</span>
-                                     <span style="font-size: 0.8rem;">15분</span>
-                                </li>
-                                <li style="text-align: center; color: #ef4444; font-size: 0.7rem; margin-top: 10px;">* 푸시 알림은 미지원됩니다.</li>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Sticker mockup on the right -->
-                    <div class="sticker-card">
-                        <strong style="color: #0f172a; font-size: 0.8rem;">Laundry24/LG</strong>
-                        <p style="font-size: 0.7rem; color: #64748b; margin-top: 3px;">세탁실 객실용 QR</p>
-                        <div style="background-color: #334155; width: 60px; height: 60px; margin: 15px auto; line-height: 60px; color: #fff;">QR</div>
-                        <span class="qr-placeholder" style="color: #38bdf8;">스캔하세요</span>
-                    </div>
-                </div>
-            </div>
+            
         </div>
-    </section>
+    </main>
 
-</main>
+    <footer class="footer">
+        <p>© 2026 HD현대중공업 x Laundry24/LaundryGo 공동 인프라 제안 개발 협의용 문서.</p>
+        <p style="font-size: 0.8rem; color: #64748b; margin-top: 6px;">본 시스템 화면의 UI/UX 저작권은 의식주컴퍼니에 있으며, HD현대중공업 스마트 십 수주 제안 목적 외 대외 공유를 금합니다.</p>
+    </footer>
 
-<footer class="footer">
-    <p>© 2026 HD현대중공업 x Laundry24/LaundryGo Project. All Rights Reserved.</p>
-</footer>
+</body>
+</html>
+"""
 
-```
+with open("smart_laundry_proposal_web.html", "w", encoding="utf-8") as f:
+    f.write(html_content)
+print("File successfully updated.")
