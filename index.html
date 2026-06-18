@@ -142,6 +142,13 @@
             max-width: 560px; line-height: 1.8;
         }
         .section-desc strong { color: var(--navy); font-weight: 700; }
+        .open-note {
+            display: inline-block;
+            background: var(--cyan-light); color: var(--cyan-dark);
+            font-size: 0.85rem; font-weight: 700;
+            padding: 3px 12px; border-radius: 100px;
+            margin-left: 6px; white-space: nowrap;
+        }
 
         /* ── SUMMARY TABLE ── */
         .summary-section { padding-top: 64px; }
@@ -219,6 +226,30 @@
             width: 100%; height: 100%;
             object-fit: contain;
         }
+
+        /* QR 결제 화면 목업 */
+        .pay-screen {
+            width: 100%; height: 100%;
+            background: linear-gradient(155deg, var(--navy), var(--navy2));
+            display: flex; align-items: center; justify-content: center;
+            padding: 24px;
+        }
+        .pay-inner { width: 100%; max-width: 300px; text-align: center; color: #fff; }
+        .pay-title { font-size: 1.05rem; font-weight: 700; margin-bottom: 4px; }
+        .pay-sub { font-size: 0.76rem; color: rgba(255,255,255,0.5); margin-bottom: 18px; }
+        .pay-qr {
+            background: #fff; width: 142px; height: 142px;
+            border-radius: 16px; margin: 0 auto 18px; padding: 12px;
+        }
+        .pay-list { display: flex; flex-direction: column; gap: 9px; }
+        .pay-btn {
+            display: flex; align-items: center; justify-content: center;
+            font-size: 0.82rem; font-weight: 700;
+            padding: 10px; border-radius: 12px;
+        }
+        .pay-naver { background: #03C75A; color: #fff; }
+        .pay-kakao { background: #FFEB00; color: #3C1E1E; }
+        .pay-toss { background: #0064FF; color: #fff; }
 
         .feature-content { }
         .feature-num {
@@ -399,7 +430,7 @@
     <!-- SUMMARY TABLE -->
     <section class="section summary-section reveal">
         <p class="summary-title">v1.0 → v2.0, 무엇이 달라졌나</p>
-        <p class="summary-sub">5가지 핵심 개선으로 운영 효율과 고객 경험이 동시에 올라갑니다.</p>
+        <p class="summary-sub">6가지 핵심 개선으로 운영 효율과 고객 경험이 동시에 올라갑니다.</p>
 
         <div class="compare-grid">
             <div class="compare-row compare-header">
@@ -411,6 +442,11 @@
                 <div class="compare-cell label">실시간 기기연동</div>
                 <div class="compare-cell old col-divider">결제만 가능</div>
                 <div class="compare-cell new col-divider">결제, 코스선택, 진행상황 노티 등</div>
+            </div>
+            <div class="compare-row">
+                <div class="compare-cell label">간편결제</div>
+                <div class="compare-cell old col-divider">카드 결제 중심</div>
+                <div class="compare-cell new col-divider">QR 기반 네이버·카카오·토스페이 등</div>
             </div>
             <div class="compare-row">
                 <div class="compare-cell label">알림 정확도</div>
@@ -442,7 +478,7 @@
                 <div class="section-label">Seamless Connection</div>
                 <div class="feature-num">01</div>
                 <h2 class="section-title">실시간 기기 연동</h2>
-                <p class="section-desc">LG API 연동으로 키오스크 결제 정보가 즉시 전송됩니다. 이제 고객은 기기에서 코스를 다시 고를 필요 없이 <strong>"시작" 버튼만 누르면</strong> 세탁이 시작됩니다.</p>
+                <p class="section-desc">LG API 연동으로 키오스크 결제 정보가 즉시 전송됩니다. 이제 고객은 기기에서 코스를 다시 고를 필요 없이 <strong>"시작" 버튼만 누르면</strong> 세탁이 시작됩니다. <span class="open-note">26년 8월 중 오픈예정</span></p>
                 <ul class="bullet-list">
                     <li>결제 즉시 기기에 코스 자동 전송</li>
                     <li>고객 조작 단계 최소화로 이탈 방지</li>
@@ -455,32 +491,12 @@
         </div>
     </section>
 
-    <!-- FEATURE 2 -->
+    <!-- FEATURE 2 (중단 없는 매장 이용) -->
     <section class="section reveal">
         <div class="feature-grid reverse">
             <div class="feature-content">
-                <div class="section-label">Precision Timing</div>
-                <div class="feature-num">02</div>
-                <h2 class="section-title">획기적인<br>알림 정확도</h2>
-                <p class="section-desc">가장 중요한 "남은 시간 알림"이 고도화되었습니다. 기존 10분 이상 발생하던 오차를 <strong>1분 미만으로 줄여</strong> 고객에게 정확한 세탁 종료 안내를 제공합니다.</p>
-                <div class="impact-box" style="margin-top:28px;">
-                    <div class="impact-box-label">Before → After</div>
-                    <div class="impact-box-title">10분+ 오차 → 1분 미만</div>
-                    <div class="impact-box-desc">고객 불만의 핵심 원인이었던 알림 지연, v2.0에서 사실상 제거되었습니다.</div>
-                </div>
-            </div>
-            <div class="feature-image">
-                <img src="image2.png" alt="알림 정확도 개선">
-            </div>
-        </div>
-    </section>
-
-    <!-- FEATURE 3 -->
-    <section class="section reveal">
-        <div class="feature-grid">
-            <div class="feature-content">
                 <div class="section-label">Non-stop Service</div>
-                <div class="feature-num">03</div>
+                <div class="feature-num">02</div>
                 <h2 class="section-title">중단 없는<br>매장 이용</h2>
                 <p class="section-desc">물류 입고 작업과 고객 서비스를 분리하여 매장 운영 효율을 극대화했습니다.</p>
                 <ul class="bullet-list">
@@ -495,12 +511,12 @@
         </div>
     </section>
 
-    <!-- FEATURE 4 -->
+    <!-- FEATURE 3 (직관적인 유저액션 유도) -->
     <section class="section reveal">
-        <div class="feature-grid reverse">
+        <div class="feature-grid">
             <div class="feature-content">
                 <div class="section-label">Smart UX</div>
-                <div class="feature-num">04</div>
+                <div class="feature-num">03</div>
                 <h2 class="section-title">직관적인<br>유저액션 유도</h2>
                 <p class="section-desc">복잡한 드라이클리닝 접수 과정도 누구나 쉽게 마칠 수 있습니다. 단계별 맞춤 UI를 통해 <strong>이탈률을 낮추고 접수 누락 오류를 원천 차단</strong>합니다.</p>
                 <ul class="bullet-list">
@@ -515,12 +531,12 @@
         </div>
     </section>
 
-    <!-- FEATURE 5 -->
-    <section class="section reveal" style="padding-bottom: 0;">
-        <div class="feature-grid" style="gap:48px;">
+    <!-- FEATURE 4 (고객 주도 장애 대응) -->
+    <section class="section reveal">
+        <div class="feature-grid reverse">
             <div class="feature-content">
                 <div class="section-label">Self Recovery</div>
-                <div class="feature-num">05</div>
+                <div class="feature-num">04</div>
                 <h2 class="section-title">고객 주도<br>장애 대응</h2>
                 <p class="section-desc">심야 등 관리 부재 시에도 서비스가 중단되지 않습니다. 기기 오류 발생 시 고객이 직접 키오스크에서 <strong>'자체 초기화'</strong>를 진행하여 즉시 문제를 해결할 수 있습니다.</p>
                 <ul class="bullet-list">
@@ -531,6 +547,85 @@
             </div>
             <div class="feature-image">
                 <img src="image5.png" alt="장애 대응 프로세스">
+            </div>
+        </div>
+    </section>
+
+    <!-- FEATURE 5 (NEW · QR 간편결제) -->
+    <section class="section reveal">
+        <div class="feature-grid">
+            <div class="feature-content">
+                <div class="section-label">Easy Payment</div>
+                <div class="feature-num">05</div>
+                <h2 class="section-title">QR 기반<br>간편결제</h2>
+                <p class="section-desc">키오스크 화면의 QR 하나로 <strong>네이버페이·카카오페이·토스페이</strong> 등 다양한 간편결제를 지원합니다. 카드를 꺼낼 필요 없이 휴대폰으로 QR을 스캔하면 결제가 끝납니다. <span class="open-note">26년 하반기 오픈예정</span></p>
+                <ul class="bullet-list">
+                    <li>화면 QR 스캔으로 즉시 결제 진행</li>
+                    <li>네이버·카카오·토스페이 등 멀티 간편결제 지원</li>
+                    <li>실물 카드 없이 비접촉으로 결제 완료</li>
+                </ul>
+            </div>
+            <div class="feature-image">
+                <div class="pay-screen">
+                    <div class="pay-inner">
+                        <div class="pay-title">간편결제를 선택하세요</div>
+                        <div class="pay-sub">휴대폰으로 QR을 스캔하면 결제가 완료됩니다</div>
+                        <div class="pay-qr">
+                            <svg viewBox="0 0 21 21" width="100%" height="100%" shape-rendering="crispEdges" role="img" aria-label="결제 QR 코드">
+                                <rect width="21" height="21" fill="#fff"/>
+                                <g fill="#0F1729">
+                                    <path d="M0 0h7v7h-7z M1 1v5h5v-5z M2 2h3v3h-3z"/>
+                                    <path d="M14 0h7v7h-7z M15 1v5h5v-5z M16 2h3v3h-3z"/>
+                                    <path d="M0 14h7v7h-7z M1 15v5h5v-5z M2 16h3v3h-3z"/>
+                                    <rect x="8" y="0" width="1" height="1"/><rect x="10" y="0" width="1" height="1"/><rect x="12" y="1" width="1" height="1"/>
+                                    <rect x="9" y="2" width="1" height="1"/><rect x="11" y="2" width="1" height="1"/><rect x="8" y="3" width="1" height="1"/>
+                                    <rect x="10" y="3" width="1" height="1"/><rect x="12" y="3" width="1" height="1"/><rect x="9" y="4" width="1" height="1"/>
+                                    <rect x="11" y="5" width="1" height="1"/><rect x="8" y="5" width="1" height="1"/><rect x="12" y="6" width="1" height="1"/>
+                                    <rect x="0" y="8" width="1" height="1"/><rect x="2" y="8" width="1" height="1"/><rect x="4" y="9" width="1" height="1"/>
+                                    <rect x="6" y="8" width="1" height="1"/><rect x="1" y="10" width="1" height="1"/><rect x="3" y="11" width="1" height="1"/>
+                                    <rect x="5" y="10" width="1" height="1"/><rect x="0" y="12" width="1" height="1"/><rect x="2" y="12" width="1" height="1"/>
+                                    <rect x="9" y="8" width="1" height="1"/><rect x="11" y="9" width="1" height="1"/><rect x="13" y="8" width="1" height="1"/>
+                                    <rect x="15" y="9" width="1" height="1"/><rect x="17" y="8" width="1" height="1"/><rect x="19" y="9" width="1" height="1"/>
+                                    <rect x="10" y="10" width="1" height="1"/><rect x="12" y="11" width="1" height="1"/><rect x="14" y="10" width="1" height="1"/>
+                                    <rect x="16" y="11" width="1" height="1"/><rect x="18" y="10" width="1" height="1"/><rect x="20" y="11" width="1" height="1"/>
+                                    <rect x="9" y="12" width="1" height="1"/><rect x="11" y="13" width="1" height="1"/><rect x="13" y="12" width="1" height="1"/>
+                                    <rect x="8" y="14" width="1" height="1"/><rect x="10" y="15" width="1" height="1"/><rect x="12" y="14" width="1" height="1"/>
+                                    <rect x="14" y="15" width="1" height="1"/><rect x="16" y="14" width="1" height="1"/><rect x="18" y="15" width="1" height="1"/>
+                                    <rect x="20" y="14" width="1" height="1"/><rect x="9" y="16" width="1" height="1"/><rect x="11" y="17" width="1" height="1"/>
+                                    <rect x="13" y="16" width="1" height="1"/><rect x="15" y="17" width="1" height="1"/><rect x="17" y="16" width="1" height="1"/>
+                                    <rect x="19" y="17" width="1" height="1"/><rect x="8" y="18" width="1" height="1"/><rect x="10" y="19" width="1" height="1"/>
+                                    <rect x="12" y="18" width="1" height="1"/><rect x="14" y="19" width="1" height="1"/><rect x="16" y="18" width="1" height="1"/>
+                                    <rect x="18" y="19" width="1" height="1"/><rect x="20" y="18" width="1" height="1"/>
+                                </g>
+                            </svg>
+                        </div>
+                        <div class="pay-list">
+                            <div class="pay-btn pay-naver">N Pay · 네이버페이</div>
+                            <div class="pay-btn pay-kakao">kakao · 카카오페이</div>
+                            <div class="pay-btn pay-toss">toss · 토스페이</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FEATURE 6 (획기적인 알림 정확도) -->
+    <section class="section reveal" style="padding-bottom: 0;">
+        <div class="feature-grid reverse" style="gap:48px;">
+            <div class="feature-content">
+                <div class="section-label">Precision Timing</div>
+                <div class="feature-num">06</div>
+                <h2 class="section-title">획기적인<br>알림 정확도</h2>
+                <p class="section-desc">가장 중요한 "남은 시간 알림"이 고도화되었습니다. 기존 10분 이상 발생하던 오차를 <strong>1분 미만으로 줄여</strong> 고객에게 정확한 세탁 종료 안내를 제공합니다.</p>
+                <div class="impact-box" style="margin-top:28px;">
+                    <div class="impact-box-label">Before → After</div>
+                    <div class="impact-box-title">10분+ 오차 → 1분 미만</div>
+                    <div class="impact-box-desc">고객 불만의 핵심 원인이었던 알림 지연, v2.0에서 사실상 제거되었습니다.</div>
+                </div>
+            </div>
+            <div class="feature-image">
+                <img src="image2.png" alt="알림 정확도 개선">
             </div>
         </div>
     </section>
@@ -548,6 +643,11 @@
                     <div class="night-item-desc">결제 즉시 기기 자동 세팅</div>
                 </div>
                 <div class="night-item">
+                    <div class="night-item-icon">📱</div>
+                    <div class="night-item-title">QR 간편결제</div>
+                    <div class="night-item-desc">네이버·카카오·토스페이 지원</div>
+                </div>
+                <div class="night-item">
                     <div class="night-item-icon">🔔</div>
                     <div class="night-item-title">정확한 알림</div>
                     <div class="night-item-desc">1분 미만 오차 보장</div>
@@ -556,11 +656,6 @@
                     <div class="night-item-icon">🔧</div>
                     <div class="night-item-title">자가 복구</div>
                     <div class="night-item-desc">고객 주도 오류 초기화</div>
-                </div>
-                <div class="night-item">
-                    <div class="night-item-icon">🛍️</div>
-                    <div class="night-item-title">무중단 입고</div>
-                    <div class="night-item-desc">입고 중에도 서비스 지속</div>
                 </div>
             </div>
         </div>
